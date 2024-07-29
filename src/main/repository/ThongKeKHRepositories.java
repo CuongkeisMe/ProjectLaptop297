@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import main.entity.ThongKe;
+import main.request.FindTKSanPham;
 
 /**
  *
@@ -17,22 +18,17 @@ import main.entity.ThongKe;
  */
 public class ThongKeKHRepositories {
 
-    public ArrayList<ThongKe> getAll() {
+    public ArrayList<ThongKe> getAll(FindTKSanPham fsp) {
         ArrayList<ThongKe> list = new ArrayList<>();
-        String sql = """
-                   SELECT 
-                       KhachHang.MaKhachHang AS 'MaKH',
-                       KhachHang.HoTen AS 'TenKH',
-                       COUNT(HoaDon.id_HoaDon) AS 'SoLuongMua',
-                       SUM(HoaDon.ThanhTien) AS 'TongTienThanhToan'
-                   FROM 
-                       HoaDon
-                   JOIN 
-                       KhachHang ON KhachHang.id_KhachHang = HoaDon.id_KhachHang
-                   GROUP BY 
-                       KhachHang.MaKhachHang, KhachHang.HoTen;
-                   """;
+        String sql = "SELECT KhachHang.MaKhachHang AS 'MaKH', KhachHang.HoTen AS 'TenKH', "
+                + "COUNT(HoaDon.id_HoaDon) AS 'SoLuongMua', SUM(HoaDon.ThanhTien) AS 'TongTienThanhToan' "
+                + "FROM HoaDon "
+                + "JOIN KhachHang ON KhachHang.id_KhachHang = HoaDon.id_KhachHang "
+                + "WHERE KhachHang.MaKhachHang LIKE ? OR KhachHang.HoTen LIKE ? "
+                + "GROUP BY KhachHang.MaKhachHang, KhachHang.HoTen";;
         try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setObject(1, "%" + fsp.getKeySearchKh() + "%");
+            ps.setObject(2, "%" + fsp.getKeySearchKh() + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ThongKe tk = ThongKe.builder()
