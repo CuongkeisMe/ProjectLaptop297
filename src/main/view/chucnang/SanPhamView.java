@@ -207,13 +207,24 @@ public class SanPhamView extends javax.swing.JInternalFrame {
             x.getGiaNhap(), x.getGiaBan()
         }));
     }
+    private ImageIcon resizeImage(String imagePath, int width, int height) {
+        ImageIcon originalIcon = XImage.read(imagePath);
+        Image originalImage = originalIcon.getImage();
+        Image resizedImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(resizedImage);
+    }
 
     private void detail(int index) {
         SanPhamResponse spReponse = sanphamRepository.getAll(getFormSearch()).get(index);
         txtTenSP.setText(spReponse.getTenSanPham());
-        if(sanphamResponse.getHinhAnh() != null && !sanphamResponse.getHinhAnh().isEmpty()){
-            lbHinhAnh.setIcon(XImage.read(sanphamResponse.getHinhAnh()));
-            lbHinhAnh.setToolTipText(sanphamResponse.getHinhAnh());
+        txtGiaNhap.setText(String.valueOf(spReponse.getGiaNhap()));
+        txtGiaBan.setText(String.valueOf(spReponse.getGiaBan()));
+        if (spReponse.getHinhAnh() != null && !spReponse.getHinhAnh().isEmpty()) {
+            lbHinhAnh.setIcon(resizeImage(spReponse.getHinhAnh(), 250, 200));
+            lbHinhAnh.setToolTipText(spReponse.getHinhAnh());
+        } else {
+            lbHinhAnh.setIcon(null);
+            lbHinhAnh.setToolTipText(null);
         }
         cboCPU.setSelectedItem(spReponse.getTenCPU());
         cboGPU.setSelectedItem(spReponse.getTenGPU());
@@ -221,12 +232,10 @@ public class SanPhamView extends javax.swing.JInternalFrame {
         cboRam.setSelectedItem(spReponse.getDungLuongRam());
         cboKichThuoc.setSelectedItem(spReponse.getKichThuoc());
         cboPin.setSelectedItem(spReponse.getDungLuongPin());
-        txtGiaNhap.setText(String.valueOf(spReponse.getGiaNhap()));
-        txtGiaBan.setText(String.valueOf(spReponse.getGiaBan()));
     }
     
     private void detailImeiCT(int index){
-        SanPhamResponse imeiSp = sanphamRepository.getImeiByMaSP(sanphamResponse.getMaSanPham()).get(index);
+        SanPhamResponse imeiSp = sanphamRepository.getImeiByMaSP(tblImeiCT.getValueAt(index, 1).toString()).get(index);
         txtImeiCT.setText(imeiSp.getMaImei());
     }
 
@@ -277,6 +286,15 @@ public class SanPhamView extends javax.swing.JInternalFrame {
     private int getSanPhamSelectedRow() {
         for (int i = 0; i < dtmImei.getRowCount(); i++) {
             if (dtmImei.getValueAt(i, 1).equals(sanphamDcbm.getSelectedItem())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    private int getImeiSelectedRow(){
+        for(int i = 0; i < dtmImeiChiTiet.getRowCount(); i++){
+            if(dtmImeiChiTiet.getValueAt(i, 1).equals(sanphamResponse.getMaSanPham())){
                 return i;
             }
         }
@@ -822,6 +840,11 @@ public class SanPhamView extends javax.swing.JInternalFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/icon/5049209_bin_delete_remove_trash_icon.png"))); // NOI18N
         jButton1.setText("Xóa");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -997,6 +1020,7 @@ public class SanPhamView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblQuanLySPMouseClicked
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        lbHinhAnh.setIcon(null);
         txtTenSP.setText("");
         txtGiaBan.setText("");
         txtGiaNhap.setText("");
@@ -1157,13 +1181,27 @@ public class SanPhamView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnRestoreActionPerformed
 
     private void tblImeiCTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblImeiCTMouseClicked
-        this.detailImeiCT(tblImeiCT.getSelectedRow());
+        int index = tblImeiCT.getSelectedRow();
+        this.detailImeiCT(index);
     }//GEN-LAST:event_tblImeiCTMouseClicked
 
     private void btnAddOCungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddOCungActionPerformed
         OCungView ocung = new OCungView(this);
         ocung.setVisible(true);
     }//GEN-LAST:event_btnAddOCungActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(txtImeiCT.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn imei cần xóa");
+        }else{
+            if(imeiRepository.delete(txtImeiCT.getText())){
+                JOptionPane.showMessageDialog(this, "Xóa thành công !");
+                this.ShowDataTableImeiChiTiet(tblImeiCT.getValueAt(this.getSanPhamSelectedRow(), 1).toString());
+                sanphamRepository.updateQuantity(this.getSoLuong() - 1, sanphamRepository.getAll(getFormSearch()).get(this.getImeiSelectedRow()).getMaSanPham());
+                this.showDataTableImei(sanphamRepository.getAll(getFormSearch()));
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

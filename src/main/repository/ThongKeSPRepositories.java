@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package main.repository;
 
 import main.config.DBConnect;
@@ -11,10 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import main.entity.ThongKe;
 
-/**
- *
- * @author Admin
- */
+
 public class ThongKeSPRepositories {
     public ArrayList<ThongKe> getAll(){
         ArrayList<ThongKe> list = new ArrayList<>();

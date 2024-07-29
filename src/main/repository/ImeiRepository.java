@@ -55,14 +55,14 @@ public class ImeiRepository {
         return check > 0;
     }
     
-    public Boolean delete(Integer IdImei){
+    public Boolean delete(String maImei){
         String sql = """
                      DELETE FROM [dbo].[Imei]
-                           WHERE id_Imei = ?
+                           WHERE Ma_Imei = ?
                      """;
         int check = 0;
         try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setObject(1, IdImei);
+            ps.setObject(1, maImei);
             check = ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace(System.out);
