@@ -5,7 +5,8 @@
         <group>
             <file>file:/E:/Laptop/src/main/view/chucnang/SanPhamView.java</file>
             <file>file:/E:/Laptop/src/main/repository/SanPhamRepository.java</file>
-            <file>file:/E:/Laptop/src/main/form/DangNhap.java</file>
+            <file>file:/E:/Laptop/src/main/view/chucnang/BanHang.java</file>
+            <file>file:/E:/Laptop/src/main/repository/BanHangSPRepositories.java</file>
         </group>
     </open-files>
 </project-private>

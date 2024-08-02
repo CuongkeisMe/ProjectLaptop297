@@ -40,25 +40,25 @@ public class TaiKhoan extends javax.swing.JInternalFrame {
         ui.setNorthPane(null);
     }
 
-    private void showdataTb(ArrayList<main.entity.TaiKhoan> list) {
+    private void showdataTb(ArrayList<main.entity.TaiKhoanEtity> list) {
         df.setRowCount(0);
         list.forEach(s -> df.addRow(new Object[]{
             s.getId(),
             s.getIdNhanVien(),
             s.getUserName(),
             s.getPass(),
-            s.getVaiTro() ? "Nhân Viên" : "Admin",
+            s.getVaiTro()==0 ? "Nhân Viên" : "Admin",
             s.getTrangThai() ? "Đang Hoạt Động" : "Ngừng Hoạt Động",}));
     }
 
-    private void showdataTbkhd(ArrayList<main.entity.TaiKhoan> list) {
+    private void showdataTbkhd(ArrayList<main.entity.TaiKhoanEtity> list) {
         dfkhd.setRowCount(0);
         list.forEach(s -> dfkhd.addRow(new Object[]{
             s.getId(),
             s.getIdNhanVien(),
             s.getUserName(),
             s.getPass(),
-            s.getVaiTro() ? "Nhân Viên" : "Admin",
+            s.getVaiTro()==0 ? "Nhân Viên" : "Admin",
             s.getTrangThai() ? "Đang Hoạt Động" : "Ngừng Hoạt Động",}));
     }
 
@@ -547,22 +547,22 @@ public class TaiKhoan extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbotkActionPerformed
     private void detail(int index) {
-        main.entity.TaiKhoan tk = tkrp.getAll().get(index);
+        main.entity.TaiKhoanEtity tk = tkrp.getAll().get(index);
         txtIDNhanVien.setText((tk.getIdNhanVien()).toString());
         txtTenTaiKhoan.setText(tk.getUserName());
         txtMaKhau.setText(tk.getPass());
         rdoDangHD.setSelected(tk.getTrangThai());
         rdoNgungHD.setSelected(!tk.getTrangThai());
-        rdoAdmin.setSelected(!tk.getVaiTro());
-        rdoNhanVien.setSelected(tk.getVaiTro());
+//        rdoAdmin.setSelected(!tk.getVaiTro());
+//        rdoNhanVien.setSelected(tk.getVaiTro());
     }
 
-    private main.entity.TaiKhoan getformtaikhoan() {
-        return main.entity.TaiKhoan.builder()
+    private main.entity.TaiKhoanEtity getformtaikhoan() {
+        return main.entity.TaiKhoanEtity.builder()
                 .idNhanVien(Integer.parseInt(txtIDNhanVien.getText()))
                 .userName(txtTenTaiKhoan.getText())
                 .Pass(txtMaKhau.getText())
-                .vaiTro(rdoNhanVien.isSelected())
+//                .vaiTro(rdoNhanVien.isSelected())
                 .TrangThai(rdoDangHD.isSelected())
                 .build();
 

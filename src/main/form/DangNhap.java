@@ -4,7 +4,11 @@ import javax.swing.JOptionPane;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import main.config.DBConnect;
+import main.entity.TaiKhoanEtity;
+import main.entity.ToanCuc;
+import main.repository.TaiKhoanRepository;
 
 public class DangNhap extends javax.swing.JFrame {
 
@@ -160,42 +164,52 @@ public class DangNhap extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_rdoCheckMouseClicked
 
+    private boolean check() {
+        if (txtTaiKhoan.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập UserName");
+            return false;
+        } else if (txtMatKhau.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập PassWord");
+            return false;
+        }
+
+        return true;
+    }
+
+    public void login() {
+
+        TaiKhoanRepository rp = new TaiKhoanRepository();
+        ArrayList<TaiKhoanEtity> list = rp.getAll();
+
+        for (TaiKhoanEtity tk : list) {
+            if (txtTaiKhoan.getText().equals(tk.getUserName())
+                    && txtMatKhau.getText().equals(tk.getPass())) {
+                JOptionPane.showMessageDialog(this, "Đăng Nhập Thành Công Bạn Là: "
+                        + (tk.getVaiTro() == 1 ? "Admin" : "Nhân Viên"));
+                // Lưu thông tin vào biến toàn cục
+                ToanCuc.setVaiTro(tk.getVaiTro());
+                ToanCuc.setId(tk.getId()); // ID tài khoản
+                ToanCuc.setIdNhanVien(tk.getIdNhanVien()); // ID nhân viên
+                ToanCuc.setMaNhanVien(tk.getMaNhanVien());
+                ToanCuc.setTenNhanVien(tk.getTenNhanVien());
+
+                Menu m = new Menu();
+                m.setVisible(true);
+                this.dispose();
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(this, "Sai UserName hoặc PassWord!");
+    }
+    
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         txtMatKhau.setText("");
         txtTaiKhoan.setText("");
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
-        String ten = txtTaiKhoan.getText();
-        String matkhau = String.valueOf(txtMatKhau.getPassword());
-        if (ten.equals("") || matkhau.equals("")) {
-            JOptionPane.showMessageDialog(this, "Mật Khẩu Hoặc Tài Khoản Không Được Trống");
-        } else {
-            try {
-                Connection con = DBConnect.getConnection();
-                PreparedStatement pr;
-                String sql = """
-                             select * from TaiKhoan tk join VaiTro vt
-                             on tk.id_VaiTro= vt.id_VaiTro
-                             where tk.UserName=? and tk.Pass=? 
-                             """;
-                pr = con.prepareStatement(sql);
-                pr.setString(1, ten);
-                pr.setString(2, matkhau);
-                ResultSet rs = pr.executeQuery();
-
-                if (rs.next()) {
-                    JOptionPane.showMessageDialog(this, "Đăng Nhập Thành Công");
-                    Menu mn = new Menu();
-                    mn.setVisible(true);
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Tài Khoản Mật Khẩu không Hợp Lệ");
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Lỗi kết nối cơ sở dữ liệu");
-                e.printStackTrace();
-            }
+        if (check()) {
+            login(); 
         }
     }//GEN-LAST:event_btnDangNhapActionPerformed
 

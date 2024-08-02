@@ -16,8 +16,9 @@ import lombok.ToString;
 @ToString
 
 public class HoaDonTro {
+    private Integer idHoaDon;
     private String maHoaDon;
     private Date ngayTao;
     private String maNhanVien;
-    private Boolean tinhTrang;
+    private Integer tinhTrang;
 }

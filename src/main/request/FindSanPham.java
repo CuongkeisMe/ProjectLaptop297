@@ -16,6 +16,4 @@ import lombok.ToString;
 
 public class FindSanPham {
     private String keySearch1;
-    private String keySearchGiaMin;
-    private String keySearchGiaMax;
 }

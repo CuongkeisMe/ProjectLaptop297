@@ -7,12 +7,15 @@ import javax.swing.table.DefaultTableModel;
 import main.entity.Imei;
 import main.repository.SanPhamRepository;
 import main.response.SanPhamResponse;
+import main.view.chucnang.BanHang;
 import main.view.chucnang.SanPhamView;
 
 public class ImeiChiTiet extends javax.swing.JFrame {
     private DefaultTableModel dtm;
     private SanPhamRepository sanphamRepository;
     private SanPhamResponse sanphamResponse;
+    private BanHang BHV;
+    ArrayList<String> selectedImei = new ArrayList<>();
     
     public ImeiChiTiet() {
         initComponents();
@@ -25,7 +28,7 @@ public class ImeiChiTiet extends javax.swing.JFrame {
         this.ShowDataTable(sanphamResponse.getMaSanPham());
     }
     
-    public ImeiChiTiet(String maSP) {
+    public ImeiChiTiet(String maSP, BanHang banhangView) {
         initComponents();
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -34,13 +37,14 @@ public class ImeiChiTiet extends javax.swing.JFrame {
         sanphamRepository = new SanPhamRepository();
         sanphamResponse = new SanPhamResponse();
         this.ShowDataTable(maSP);
+        BHV = banhangView;
     }
 
     private void ShowDataTable(String MaSP){
         dtm.setRowCount(0);
         AtomicInteger index = new AtomicInteger(1);
         sanphamRepository.getImeiByMaSP(MaSP).forEach(x -> dtm.addRow(new Object[]{
-            index.getAndIncrement(), x.getMaSanPham(), x.getMaImei()
+            index.getAndIncrement(), x.getMaSanPham(), x.getMaImei(), false
         }));
     }
 
@@ -51,20 +55,26 @@ public class ImeiChiTiet extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblImeiGioHang = new javax.swing.JTable();
         btnSelect = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tblImeiGioHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "STT", "Mã SP", "Imei"
+                "STT", "Mã SP", "Imei", "Chọn"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblImeiGioHang);
 
         btnSelect.setText("Chọn");
@@ -73,6 +83,9 @@ public class ImeiChiTiet extends javax.swing.JFrame {
                 btnSelectActionPerformed(evt);
             }
         });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        jLabel1.setText("CHỌN IMEI ĐỂ THÊM VÀO GIỎ HÀNG");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,27 +99,43 @@ public class ImeiChiTiet extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnSelect)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(60, 60, 60))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap(8, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSelect)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
-        int index = tblImeiGioHang.getSelectedRow();
-        if(index == -1){
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn Imei muốn bán !");
-        }else{
-            
-        }
+//        for (int i = 0; i < tblImeiGioHang.getRowCount(); i++) {
+//            Boolean isChecked = (Boolean) tblImeiGioHang.getValueAt(i, 3);
+//            if (isChecked != null && isChecked) {
+//                String imei = (String) tblImeiGioHang.getValueAt(i, 2);
+//                selectedImei.add(imei);
+//            }
+//        }  
+//        if (selectedImei.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Vui lòng chọn Imei muốn bán !");
+//        } else {
+//            if(BHV != null){
+//                BHV.addGioHang(selectedImei.size());
+//            }
+//            JOptionPane.showMessageDialog(this, "Chọn imei thành công: " + selectedImei);
+//            dispose();
+//        }
     }//GEN-LAST:event_btnSelectActionPerformed
 
     /**
@@ -146,6 +175,7 @@ public class ImeiChiTiet extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSelect;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblImeiGioHang;
     // End of variables declaration//GEN-END:variables
