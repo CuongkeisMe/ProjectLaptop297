@@ -1,11 +1,14 @@
 package main.view.chucnang;
 
 import java.util.ArrayList;
+import javax.swing.RowFilter;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import main.repository.ThongKeDTRepositories;
 import main.repository.ThongKeKHRepositories;
 import main.repository.ThongKeSPRepositories;
+import main.request.FindTKSanPham;
 
 public class ThongKe extends javax.swing.JInternalFrame {
 
@@ -24,23 +27,36 @@ public class ThongKe extends javax.swing.JInternalFrame {
         dtrp = new ThongKeDTRepositories();
         khrp = new ThongKeKHRepositories();
         sprp = new ThongKeSPRepositories();
-        this.showDataTableKH(khrp.getAll());
-        this.showDataTableSP(sprp.getAll());
-        this.showDataTableDT(dtrp.getAll());
+        this.showDataTableKH(khrp.getAll(getFormSearchKH()));
+        this.showDataTableSP(sprp.getAll(getFormSearch()));
+        this.showDataTableDT(dtrp.getAll(getFormSearchDT()));
         this.cauhinhForm();
     }
 
-    private void showDataTableDT(ArrayList<main.entity.ThongKe> list) {
-        dtmdt.setRowCount(0);
-        for (int i = 0; i < list.size(); i++) {
-            main.entity.ThongKe tkdt = list.get(i);
-            dtmdt.addRow(new Object[]{
-                tkdt.getMaHD(),
-                tkdt.getMaNV(),
-                tkdt.getTenNV(),
-                tkdt.getNgayTT(),
-                tkdt.getTongTien()
-            });
+    private FindTKSanPham getFormSearchDT() {
+        FindTKSanPham sp = new FindTKSanPham();
+        sp.setKeySearchDT(txtSearchDT.getText());
+        
+        return sp;
+    }
+
+    private FindTKSanPham getFormSearchKH() {
+        FindTKSanPham sp = new FindTKSanPham();
+        sp.setKeySearchKh(txtSearchKH.getText());
+        return sp;
+    }
+
+    private FindTKSanPham getFormSearch() {
+        FindTKSanPham sp = new FindTKSanPham();
+        sp.setKeySearch(txtSearchTableSP.getText());
+        return sp;
+    }
+
+    public void showDataTableDT(ArrayList<main.entity.ThongKe> list) {
+        DefaultTableModel model = (DefaultTableModel) tblDT.getModel();
+        model.setRowCount(0); // Xóa các dòng cũ
+        for (main.entity.ThongKe tk : list) {
+            model.addRow(new Object[]{tk.getMaHD(), tk.getMaNV(), tk.getTenNV(), tk.getNgayTT(), tk.getTongTien()});
         }
     }
 
@@ -89,25 +105,25 @@ public class ThongKe extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSP = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
-        jTextField8 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
+        txtSearchTableSP = new javax.swing.JTextField();
+        btnSearchTableSP = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblThongKeKH = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
-        jTextField4 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        txtSearchKH = new javax.swing.JTextField();
+        btnSearchKH = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        jTextField5 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtSearchDT = new javax.swing.JTextField();
+        btnSearchDT = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        btnSearchDate = new javax.swing.JButton();
+        dateChooserStart = new com.toedter.calendar.JDateChooser();
+        dateChooserEnd = new com.toedter.calendar.JDateChooser();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblDT = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
@@ -127,13 +143,18 @@ public class ThongKe extends javax.swing.JInternalFrame {
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
 
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        txtSearchTableSP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                txtSearchTableSPActionPerformed(evt);
             }
         });
 
-        jButton6.setText("Search");
+        btnSearchTableSP.setText("Search");
+        btnSearchTableSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchTableSPActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -141,9 +162,9 @@ public class ThongKe extends javax.swing.JInternalFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSearchTableSP, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSearchTableSP, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
         jPanel9Layout.setVerticalGroup(
@@ -151,8 +172,8 @@ public class ThongKe extends javax.swing.JInternalFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSearchTableSP, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchTableSP, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
@@ -192,13 +213,18 @@ public class ThongKe extends javax.swing.JInternalFrame {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        txtSearchKH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                txtSearchKHActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Search");
+        btnSearchKH.setText("Search");
+        btnSearchKH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchKHActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -206,9 +232,9 @@ public class ThongKe extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSearchKH, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSearchKH, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
         jPanel5Layout.setVerticalGroup(
@@ -216,8 +242,8 @@ public class ThongKe extends javax.swing.JInternalFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSearchKH, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchKH, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
@@ -248,13 +274,18 @@ public class ThongKe extends javax.swing.JInternalFrame {
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        txtSearchDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                txtSearchDTActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Search");
+        btnSearchDT.setText("Search");
+        btnSearchDT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchDTActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -262,9 +293,9 @@ public class ThongKe extends javax.swing.JInternalFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSearchDT, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSearchDT, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -272,20 +303,30 @@ public class ThongKe extends javax.swing.JInternalFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSearchDT, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSearchDT, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Lọc theo ngày"));
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm theo ngày"));
 
         jLabel4.setText("Từ");
 
         jLabel5.setText("Đến");
 
         jButton4.setText("Làm mới");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Lọc");
+        btnSearchDate.setText("Tìm");
+        btnSearchDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchDateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -295,13 +336,13 @@ public class ThongKe extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dateChooserStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addGap(19, 19, 19)
-                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dateChooserEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSearchDate, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
@@ -312,14 +353,14 @@ public class ThongKe extends javax.swing.JInternalFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(dateChooserEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel8Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dateChooserStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnSearchDate, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(25, Short.MAX_VALUE))
@@ -392,27 +433,72 @@ public class ThongKe extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void txtSearchKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchKHActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txtSearchKHActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void txtSearchDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchDTActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_txtSearchDTActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void txtSearchTableSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchTableSPActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_txtSearchTableSPActionPerformed
+
+    private void btnSearchTableSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchTableSPActionPerformed
+        showDataTableSP(sprp.getAll(getFormSearch()));
+    }//GEN-LAST:event_btnSearchTableSPActionPerformed
+
+    private void btnSearchKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchKHActionPerformed
+        showDataTableKH(khrp.getAll(getFormSearchKH()));
+    }//GEN-LAST:event_btnSearchKHActionPerformed
+
+    private void btnSearchDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchDTActionPerformed
+        // TODO add your handling code here:
+        FindTKSanPham fsp = new FindTKSanPham();
+        fsp.setKeySearchDT(txtSearchDT.getText());
+
+        // Kiểm tra nếu ngày bắt đầu và ngày kết thúc đều null
+        if (dateChooserStart.getDate() == null && dateChooserEnd.getDate() == null) {
+            // Không thiết lập ngày nếu cả hai đều null
+            fsp.setStartDate(null);
+            fsp.setEndDate(null);
+        }
+
+        ThongKeDTRepositories repo = new ThongKeDTRepositories();
+        ArrayList<main.entity.ThongKe> list = repo.getAll(fsp);
+        showDataTableDT(list);
+
+    }//GEN-LAST:event_btnSearchDTActionPerformed
+
+    private void btnSearchDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchDateActionPerformed
+        // TODO add your handling code here:
+        FindTKSanPham fsp = new FindTKSanPham();
+        fsp.setKeySearchDT(""); // Đặt rỗng nếu không cần tìm kiếm theo text
+        fsp.setStartDate(dateChooserStart.getDate());
+        fsp.setEndDate(dateChooserEnd.getDate());
+
+        ThongKeDTRepositories repo = new ThongKeDTRepositories();
+        ArrayList<main.entity.ThongKe> list = repo.getAll(fsp);
+        showDataTableDT(list);
+    }//GEN-LAST:event_btnSearchDateActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        dateChooserStart.setDate(null);
+        dateChooserEnd.setDate(null);
+        showDataTableDT(dtrp.getAll(new FindTKSanPham()));
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnSearchDT;
+    private javax.swing.JButton btnSearchDate;
+    private javax.swing.JButton btnSearchKH;
+    private javax.swing.JButton btnSearchTableSP;
+    private com.toedter.calendar.JDateChooser dateChooserEnd;
+    private com.toedter.calendar.JDateChooser dateChooserStart;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -427,11 +513,11 @@ public class ThongKe extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTable tblDT;
     private javax.swing.JTable tblSP;
     private javax.swing.JTable tblThongKeKH;
+    private javax.swing.JTextField txtSearchDT;
+    private javax.swing.JTextField txtSearchKH;
+    private javax.swing.JTextField txtSearchTableSP;
     // End of variables declaration//GEN-END:variables
 }
