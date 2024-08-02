@@ -11,19 +11,16 @@ import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import main.entity.HoaDonTro;
-<<<<<<< HEAD
 import main.entity.Imei;
 import main.repository.BanHangSPRepositories;
 import main.repository.HoaDonRepository;
 import main.response.BanHangResponse;
-=======
 import main.entity.KhachHang;
 import main.repository.BanHangSPRepositories;
 import main.repository.HoaDonRepository;
 import main.repository.KhachHangRepository;
 import main.repository.SanPhamRepository;
 import main.request.FindKhachHang;
->>>>>>> f50ec7abcea0440e3a800d4fcd6d699ea45ad2aa
 import main.response.SanPhamResponse;
 import main.view.sanphamchitiet.BHChonKH;
 import main.view.sanphamchitiet.ImeiChiTiet;
@@ -52,11 +49,8 @@ public class BanHang extends javax.swing.JInternalFrame {
         dfhoadon = (DefaultTableModel) tblHoaDonTro.getModel();
         banhangRepository = new BanHangSPRepositories();
         hdsp = new HoaDonRepository();
-<<<<<<< HEAD
         hoaDonTro = new HoaDonTro();
         banHangResponse = new BanHangResponse();
-=======
->>>>>>> f50ec7abcea0440e3a800d4fcd6d699ea45ad2aa
         this.showDataTableSP(banhangRepository.getAll());
         this.showDatahoadon(hdsp.getAllHoaDon());
 
@@ -79,11 +73,8 @@ public class BanHang extends javax.swing.JInternalFrame {
                 hd.getMaHoaDon(),
                 hd.getNgayTao(),
                 hd.getMaNhanVien(),
-<<<<<<< HEAD
                 hd.getTinhTrang()==1?"Đã Thanh Toán":"Chưa Thanh Toán"});
-=======
                 hd.getTinhTrang() ? "Chờ Thanh Toán" : "Đã Thanh Toán",});
->>>>>>> f50ec7abcea0440e3a800d4fcd6d699ea45ad2aa
         }
     }
 
@@ -532,7 +523,6 @@ public class BanHang extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField10ActionPerformed
 
     private void tblSPMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSPMousePressed
-<<<<<<< HEAD
         int indexHD = tblHoaDonTro.getSelectedRow();
         if (indexHD == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn !");
@@ -543,13 +533,11 @@ public class BanHang extends javax.swing.JInternalFrame {
                 ImeiChiTiet imei = new ImeiChiTiet(maSP, this);
                 imei.setVisible(true);
             }
-=======
         int index = tblSP.getSelectedRow();
         String maSP = (String) tblSP.getValueAt(index, 0);
         if (evt.getClickCount() == 2) {
             ImeiChiTiet imei = new ImeiChiTiet(maSP);
             imei.setVisible(true);
->>>>>>> f50ec7abcea0440e3a800d4fcd6d699ea45ad2aa
         }
     }//GEN-LAST:event_tblSPMousePressed
 
@@ -558,11 +546,9 @@ public class BanHang extends javax.swing.JInternalFrame {
         showDatahoadon(hdsp.getAllHoaDon());
     }//GEN-LAST:event_btnTaoHoaDonActionPerformed
 
-<<<<<<< HEAD
     private void tblSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSPMouseClicked
 
     }//GEN-LAST:event_tblSPMouseClicked
-=======
     private void btnChonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChonMousePressed
         // TODO add your handling code here:
         KhachHangRepository repository = new KhachHangRepository();
@@ -583,17 +569,13 @@ public class BanHang extends javax.swing.JInternalFrame {
         KhachHang selectedCustomer = dialog.getSelectedCustomer();
        
     }//GEN-LAST:event_btnChonMousePressed
->>>>>>> f50ec7abcea0440e3a800d4fcd6d699ea45ad2aa
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChon;
     private javax.swing.JButton btnTaoHoaDon;
-<<<<<<< HEAD
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-=======
->>>>>>> f50ec7abcea0440e3a800d4fcd6d699ea45ad2aa
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
@@ -626,13 +608,10 @@ public class BanHang extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField2;
-<<<<<<< HEAD
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField6;
-=======
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
->>>>>>> f50ec7abcea0440e3a800d4fcd6d699ea45ad2aa
     private javax.swing.JTextField jTextField9;
     private javax.swing.JTable tblGioHang;
     private javax.swing.JTable tblHoaDonTro;
