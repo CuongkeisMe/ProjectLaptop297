@@ -16,14 +16,20 @@ import main.entity.Imei;
 import main.repository.BanHangSPRepositories;
 import main.repository.HoaDonRepository;
 import main.response.BanHangResponse;
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> f4331053c5b5488d2b4828905d4ce9011de62c98
 import main.entity.KhachHang;
 import main.repository.BanHangSPRepositories;
 import main.repository.HoaDonRepository;
 import main.repository.KhachHangRepository;
 import main.repository.SanPhamRepository;
 import main.request.FindKhachHang;
+<<<<<<< HEAD
 >>>>>>> f50ec7abcea0440e3a800d4fcd6d699ea45ad2aa
+=======
+>>>>>>> f4331053c5b5488d2b4828905d4ce9011de62c98
 import main.response.SanPhamResponse;
 import main.view.sanphamchitiet.BHChonKH;
 import main.view.sanphamchitiet.ImeiChiTiet;
@@ -80,9 +86,13 @@ public class BanHang extends javax.swing.JInternalFrame {
                 hd.getMaNhanVien(),
 <<<<<<< HEAD
                 hd.getTinhTrang()==1?"Đã Thanh Toán":"Chưa Thanh Toán"});
+<<<<<<< HEAD
 =======
                 hd.getTinhTrang() ? "Chờ Thanh Toán" : "Đã Thanh Toán",});
 >>>>>>> f50ec7abcea0440e3a800d4fcd6d699ea45ad2aa
+=======
+                hd.getTinhTrang() ? "Chờ Thanh Toán" : "Đã Thanh Toán",});
+>>>>>>> f4331053c5b5488d2b4828905d4ce9011de62c98
         }
     }
 
@@ -542,13 +552,19 @@ public class BanHang extends javax.swing.JInternalFrame {
                 ImeiChiTiet imei = new ImeiChiTiet(maSP, this);
                 imei.setVisible(true);
             }
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> f4331053c5b5488d2b4828905d4ce9011de62c98
         int index = tblSP.getSelectedRow();
         String maSP = (String) tblSP.getValueAt(index, 0);
         if (evt.getClickCount() == 2) {
             ImeiChiTiet imei = new ImeiChiTiet(maSP);
             imei.setVisible(true);
+<<<<<<< HEAD
 >>>>>>> f50ec7abcea0440e3a800d4fcd6d699ea45ad2aa
+=======
+>>>>>>> f4331053c5b5488d2b4828905d4ce9011de62c98
         }
     }//GEN-LAST:event_tblSPMousePressed
 
@@ -561,7 +577,10 @@ public class BanHang extends javax.swing.JInternalFrame {
     private void tblSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSPMouseClicked
 
     }//GEN-LAST:event_tblSPMouseClicked
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> f4331053c5b5488d2b4828905d4ce9011de62c98
     private void btnChonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChonMousePressed
         // TODO add your handling code here:
         KhachHangRepository repository = new KhachHangRepository();
@@ -582,7 +601,10 @@ public class BanHang extends javax.swing.JInternalFrame {
         KhachHang selectedCustomer = dialog.getSelectedCustomer();
        
     }//GEN-LAST:event_btnChonMousePressed
+<<<<<<< HEAD
 >>>>>>> f50ec7abcea0440e3a800d4fcd6d699ea45ad2aa
+=======
+>>>>>>> f4331053c5b5488d2b4828905d4ce9011de62c98
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -628,10 +650,15 @@ public class BanHang extends javax.swing.JInternalFrame {
 <<<<<<< HEAD
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField6;
+<<<<<<< HEAD
 =======
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
 >>>>>>> f50ec7abcea0440e3a800d4fcd6d699ea45ad2aa
+=======
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+>>>>>>> f4331053c5b5488d2b4828905d4ce9011de62c98
     private javax.swing.JTextField jTextField9;
     private javax.swing.JTable tblGioHang;
     private javax.swing.JTable tblHoaDonTro;
