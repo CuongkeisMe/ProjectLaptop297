@@ -9,13 +9,14 @@ import main.view.chucnang.KhachHangView;
 import main.view.chucnang.KhuyenMai;
 import main.view.chucnang.NhanVienView;
 import main.view.chucnang.SanPhamView;
-import main.view.chucnang.TaiKhoan;  
+import main.view.chucnang.TaiKhoan;
 import main.view.chucnang.ThongKe;
 import main.view.chucnang.TrangChu;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import main.config.DBConnect;
+import main.entity.ToanCuc;
 
 public class Menu extends javax.swing.JFrame {
 
@@ -36,7 +37,7 @@ public class Menu extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
-    private void DefaultColorForm(){
+    private void DefaultColorForm() {
         trangchuPanel.setBackground(DefaultColor);
         sanphamPanel.setBackground(DefaultColor);
         banhangPanel.setBackground(DefaultColor);
@@ -47,7 +48,7 @@ public class Menu extends javax.swing.JFrame {
         taikhoanPanel.setBackground(DefaultColor);
         thongkePanel.setBackground(DefaultColor);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -556,14 +557,23 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_hoadonPanel1MouseClicked
 
     private void taikhoanPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taikhoanPanelMouseClicked
-        mainPanel.removeAll();
-        mainPanel.add(taikhoanForm).setVisible(true);
+        int vaiTro = ToanCuc.getVaiTro();
+        if (vaiTro == 1) {
+            mainPanel.removeAll();
+            mainPanel.add(taikhoanForm).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Bạn Không Có Quyền Ở Chức Năng Này");
+        }
     }//GEN-LAST:event_taikhoanPanelMouseClicked
 
     private void nhanvienPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nhanvienPanelMouseClicked
-
-        mainPanel.removeAll();
-        mainPanel.add(nhanvienForm).setVisible(true);
+        int vaiTro = ToanCuc.getVaiTro();
+        if (vaiTro == 1) {
+            mainPanel.removeAll();
+            mainPanel.add(nhanvienForm).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Bạn Không Có Quyền Ở Chức Năng Này");
+        }
     }//GEN-LAST:event_nhanvienPanelMouseClicked
 
     private void DangXuatPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DangXuatPaneMouseClicked

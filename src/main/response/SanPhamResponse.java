@@ -33,8 +33,8 @@ public class SanPhamResponse {
     private String KichThuoc;
     private String DungLuongPin;
     private Integer SoLuong;
-    private Integer GiaNhap;
-    private Integer GiaBan;
+    private Float GiaNhap;
+    private Float GiaBan;
     private Integer TrangThai;
 }
 

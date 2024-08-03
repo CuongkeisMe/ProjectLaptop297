@@ -7,29 +7,42 @@ import java.util.ArrayList;
 import main.config.DBConnect;
 import main.entity.KhachHang;
 import main.entity.NhanVien;
+
 import main.view.chucnang.TaiKhoan;
 
 public class TaiKhoanRepository {
 
-    public ArrayList<main.entity.TaiKhoan> getAll() {
-        ArrayList<main.entity.TaiKhoan> list = new ArrayList<>();
+    public ArrayList<main.entity.TaiKhoanEtity> getAll() {
+        ArrayList<main.entity.TaiKhoanEtity> list = new ArrayList<>();
         String sql = """
-                     SELECT dbo.TaiKhoan.id_TaiKhoan, dbo.TaiKhoan.id_Nhanvien, dbo.TaiKhoan.UserName, dbo.TaiKhoan.Pass, dbo.VaiTro.LoaiVaiTro, dbo.TaiKhoan.TrangThai
-                     FROM   dbo.TaiKhoan INNER JOIN
-                                  dbo.VaiTro ON dbo.TaiKhoan.id_VaiTro = dbo.VaiTro.id_VaiTro
-                           where dbo.TaiKhoan.TrangThai=1
-                     
+                        SELECT 
+                         tk.id_TaiKhoan, 
+                         tk.UserName, 
+                         tk.Pass, 
+                         vt.LoaiVaiTro, 
+                         tk.TrangThai, 
+                         nv.id_NhanVien,  
+                         nv.MaNhanVien,
+                         nv.HoTen
+                     FROM dbo.TaiKhoan tk
+                     INNER JOIN dbo.VaiTro vt ON tk.id_VaiTro = vt.id_VaiTro
+                     INNER JOIN dbo.NhanVien nv ON tk.id_NhanVien = nv.id_NhanVien
+                     WHERE tk.TrangThai = 1;
+   
                """;
         try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                main.entity.TaiKhoan tk = main.entity.TaiKhoan.builder()
-                        .id(rs.getInt(1))
-                        .idNhanVien(rs.getInt(2))
-                        .userName(rs.getString(3))
-                        .Pass(rs.getString(4))
-                        .vaiTro(rs.getBoolean(5))
-                        .TrangThai(rs.getBoolean(6))
+
+                main.entity.TaiKhoanEtity tk = main.entity.TaiKhoanEtity.builder()
+                        .id(rs.getInt("id_TaiKhoan"))
+                        .idNhanVien(rs.getInt("id_NhanVien"))
+                        .userName(rs.getString("UserName"))
+                        .Pass(rs.getString("Pass"))
+                        .vaiTro(rs.getInt("LoaiVaiTro")) // ánh xạ với LoaiVaiTro từ bảng VaiTro
+                        .TrangThai(rs.getBoolean("TrangThai"))
+                        .maNhanVien(rs.getString("MaNhanVien"))
+                        .tenNhanVien(rs.getString("HoTen"))
                         .build();
                 list.add(tk);
             }
@@ -39,8 +52,31 @@ public class TaiKhoanRepository {
         return list;
     }
 
-    public ArrayList<main.entity.TaiKhoan> getAlltk() {
-        ArrayList<main.entity.TaiKhoan> list = new ArrayList<>();
+//    public ArrayList<VaiTro> getAllvt() {
+//        ArrayList<VaiTro> list = new ArrayList<>();
+//        String sql = """
+//                     SELECT [id_VaiTro]
+//                                        ,[LoaiVaiTro]
+//                                    FROM [dbo].[VaiTro]
+//                           
+//                     
+//               """;
+//        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                VaiTro vt = VaiTro.builder()
+//                        .idVaiTro(rs.getInt(1))
+//                        .vaiTro(rs.getBoolean(2))
+//                        .build();
+//                list.add(vt);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return list;
+//    }
+public ArrayList<main.entity.TaiKhoanEtity> getAlltk() {
+        ArrayList<main.entity.TaiKhoanEtity> list = new ArrayList<>();
         String sql = """
                      SELECT dbo.TaiKhoan.id_TaiKhoan, dbo.TaiKhoan.id_Nhanvien, dbo.TaiKhoan.UserName, dbo.TaiKhoan.Pass, dbo.VaiTro.LoaiVaiTro, dbo.TaiKhoan.TrangThai
                      FROM   dbo.TaiKhoan INNER JOIN
@@ -50,12 +86,12 @@ public class TaiKhoanRepository {
         try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                main.entity.TaiKhoan tk = main.entity.TaiKhoan.builder()
+                main.entity.TaiKhoanEtity tk = main.entity.TaiKhoanEtity.builder()
                         .id(rs.getInt(1))
                         .idNhanVien(rs.getInt(2))
                         .userName(rs.getString(3))
                         .Pass(rs.getString(4))
-                        .vaiTro(rs.getBoolean(5))
+                        .vaiTro(rs.getInt(5))
                         .TrangThai(rs.getBoolean(6))
                         .build();
                 list.add(tk);
@@ -66,7 +102,7 @@ public class TaiKhoanRepository {
         return list;
     }
 
-    public Boolean addtk(main.entity.TaiKhoan tk) {
+    public Boolean addtk(main.entity.TaiKhoanEtity tk) {
         String sql = """
                         BEGIN TRANSACTION;
                              
@@ -108,12 +144,12 @@ public class TaiKhoanRepository {
             ps.setObject(1, id);
             check = ps.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace(System.out);
+e.printStackTrace(System.out);
         }
         return check > 0;
     }
 
-    public Boolean updatetk(main.entity.TaiKhoan tk, Integer id) {
+    public Boolean updatetk(main.entity.TaiKhoanEtity tk, Integer id) {
         String sql = """
                      UPDATE [dbo].[TaiKhoan]
                         SET 
@@ -137,8 +173,8 @@ public class TaiKhoanRepository {
         return check > 0;
     }
 
-    public ArrayList<main.entity.TaiKhoan> Timtk(String UserName, String password, Boolean vaiTro, Boolean trangThai) {
-        ArrayList<main.entity.TaiKhoan> list = new ArrayList<>();
+    public ArrayList<main.entity.TaiKhoanEtity> Timtk(String UserName, String password, Boolean vaiTro, Boolean trangThai) {
+        ArrayList<main.entity.TaiKhoanEtity> list = new ArrayList<>();
         String sql = """
                      SELECT dbo.TaiKhoan.id_TaiKhoan, dbo.TaiKhoan.id_Nhanvien, dbo.TaiKhoan.UserName, dbo.TaiKhoan.Pass, dbo.VaiTro.LoaiVaiTro, dbo.TaiKhoan.TrangThai
                                                              FROM   dbo.TaiKhoan INNER JOIN
@@ -157,20 +193,31 @@ public class TaiKhoanRepository {
             ps.setObject(4, trangThai);
 
             while (rs.next()) {
-                main.entity.TaiKhoan tk = main.entity.TaiKhoan.builder()
+                main.entity.TaiKhoanEtity tk = main.entity.TaiKhoanEtity.builder()
                         .id(rs.getInt(1))
                         .idNhanVien(rs.getInt(2))
                         .userName(rs.getString(3))
                         .Pass(rs.getString(4))
-                        .vaiTro(rs.getBoolean(5))
+                        .vaiTro(rs.getInt(5))
                         .TrangThai(rs.getBoolean(6))
                         .build();
-                list.add(tk);
+list.add(tk);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
+    }
+
+    private Boolean convertVaiTroToBoolean(String vaiTroString) {
+        // Thay đổi theo cách bạn phân loại vai trò
+        if ("Admin".equalsIgnoreCase(vaiTroString)) {
+            return true;
+        } else if ("Nhân Viên".equalsIgnoreCase(vaiTroString)) {
+            return false;
+        } else {
+            return null; // Hoặc giá trị mặc định khác
+        }
     }
 
 }
