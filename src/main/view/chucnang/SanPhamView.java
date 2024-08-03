@@ -68,6 +68,8 @@ public class SanPhamView extends javax.swing.JInternalFrame {
     private OCungRepository ocungRepository;
     private ImeiRepository imeiRepository;
     private SanPhamResponse sanphamResponse;
+    
+    private int index = -1;
 
     DecimalFormat decimalFormat = new DecimalFormat("#,##0");
 
@@ -186,7 +188,7 @@ public class SanPhamView extends javax.swing.JInternalFrame {
         list.forEach(x -> dtmSanPham.addRow(new Object[]{
             x.getMaSanPham(), x.getTenSanPham(), x.getHinhAnh(), x.getTenCPU(), x.getTenGPU(),
             x.getLoaiOCung(), x.getDungLuongRam(), x.getKichThuoc(), x.getDungLuongPin(),
-            decimalFormat.format(x.getGiaNhap()), decimalFormat.format(x.getGiaBan()), sanphamRepository.getSoLuongByMa(x.getMaSanPham())
+            decimalFormat.format(x.getGiaNhap()), decimalFormat.format(x.getGiaBan()), x.getSoLuong()
         }));
     }
 
@@ -194,7 +196,7 @@ public class SanPhamView extends javax.swing.JInternalFrame {
         dtmImei.setRowCount(0);
         AtomicInteger index = new AtomicInteger(1);
         list.forEach(x -> dtmImei.addRow(new Object[]{
-            index.getAndIncrement(), x.getMaSanPham(), x.getTenSanPham(), decimalFormat.format(x.getGiaNhap()), decimalFormat.format(x.getGiaBan()), sanphamRepository.getSoLuongByMa(x.getMaSanPham())
+            index.getAndIncrement(), x.getMaSanPham(), x.getTenSanPham(), decimalFormat.format(x.getGiaNhap()), decimalFormat.format(x.getGiaBan()), x.getSoLuong()
         }));
     }
 
@@ -289,14 +291,15 @@ public class SanPhamView extends javax.swing.JInternalFrame {
         return 0;
     }
 
-//    private int getImeiSelectedRow() {
-//        for (int i = 0; i < dtmImeiChiTiet.getRowCount(); i++) {
-//            if (dtmImeiChiTiet.getValueAt(i, 1).equals(sanphamResponse.getMaSanPham())) {
-//                return i;
-//            }
-//        }
-//        return -1;
-//    }
+    private int getImeiSelectedRow() {
+        for (int i = 0; i < dtmImeiChiTiet.getRowCount(); i++) {
+            if (dtmImeiChiTiet.getValueAt(i, 1).equals(sanphamResponse.getMaSanPham())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
     private int getIndexSanPham() {
         for (int i = 0; i < tblQuanLySP.getRowCount(); i++) {
             if (tblQuanLySP.getValueAt(i, 0).equals(sanphamResponse.getMaSanPham())) {
@@ -310,10 +313,11 @@ public class SanPhamView extends javax.swing.JInternalFrame {
         int selectedRowIndex = tblQLyImei.getSelectedRow();
         if (selectedRowIndex >= 0) {
             String maSP = sanphamRepository.getAll(getFormSearch()).get(selectedRowIndex).getMaSanPham();
+            cboMaSP.setSelectedItem(maSP);
             this.ShowDataTableImeiChiTiet(maSP);
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1120,6 +1124,7 @@ public class SanPhamView extends javax.swing.JInternalFrame {
             if (imeiRepository.add(this.getFormDataImei(), this.getIdSpByMa())) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công !");
                 txtMaImei.setText("");
+                sanphamRepository.updateQuantity(sanphamRepository.getSoLuong(maSP) + 1, maSP);
                 this.ShowDataTableImeiChiTiet(maSP);
                 this.showDataTableSanPham(sanphamRepository.getAll(getFormSearch()));
                 this.showDataTableImei(sanphamRepository.getAll(getFormSearch()));
@@ -1255,8 +1260,10 @@ public class SanPhamView extends javax.swing.JInternalFrame {
                 if (imeiRepository.delete(txtImeiCT.getText())) {
                     JOptionPane.showMessageDialog(this, "Xóa thành công !");
                     txtImeiCT.setText("");
+                    sanphamRepository.updateQuantity(sanphamRepository.getSoLuong(maSP) - 1, maSP);
                     this.ShowDataTableImeiChiTiet(maSP);
                     this.showDataTableImei(sanphamRepository.getAll(getFormSearch()));
+                    this.showDataTableSanPham(sanphamRepository.getAll(getFormSearch()));
                 }
             }
         }

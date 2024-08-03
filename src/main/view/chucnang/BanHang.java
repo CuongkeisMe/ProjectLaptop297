@@ -52,7 +52,7 @@ public class BanHang extends javax.swing.JInternalFrame {
         dtmSP.setRowCount(0);
         list.forEach(x -> dtmSP.addRow(new Object[]{
             x.getMaSanPham(), x.getTenSanPham(), x.getTenCPU(), x.getTenGPU(), x.getLoaiOCung(), x.getDungluongRam(),
-            x.getKichThuoc(), x.getDungluongPin(), decimalFormat.format(x.getGiaBan()), banhangRepository.getSoLuongByMa(x.getMaSanPham())
+            x.getKichThuoc(), x.getDungluongPin(), decimalFormat.format(x.getGiaBan()), x.getSoLuong()
         }));
     }
 

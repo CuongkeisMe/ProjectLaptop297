@@ -142,7 +142,6 @@ public class ImeiChiTiet extends javax.swing.JFrame {
         } else {
                 BHV.addGioHang(banhangRepository.getGiaBanByMa(tblImeiGioHang.getValueAt(0, 1).toString()),
                 BHV.getIdByMa(BHV.layMaSPSelect()), selectedImei.size());
-                hdctRepository.updateTrangThaiImei(BHV.getIdByMa(BHV.layMaSPSelect()));
                 BHV.showDataTableSP(banhangRepository.getAll(BHV.getFormSearch()));
                 BHV.showDataGioHang();               
             dispose();

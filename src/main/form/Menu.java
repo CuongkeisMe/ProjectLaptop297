@@ -588,6 +588,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_sanphamPanelMouseClicked
 
     private void banhangPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_banhangPanelMouseClicked
+        banhangForm = new BanHang();
         mainPanel.removeAll();
         mainPanel.add(banhangForm).setVisible(true);
     }//GEN-LAST:event_banhangPanelMouseClicked

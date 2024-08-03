@@ -276,4 +276,23 @@ public class SanPhamRepository {
         }
         return soLuong;
     }
+    
+    public int getSoLuong(String maSP) {
+        int soLuong = 0;
+        String sql = """
+                     SELECT [SoLuong]
+                     FROM [dbo].[SanPham]
+                     WHERE dbo.SanPham.MaSanPham = ?
+                     """;
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setObject(1, maSP);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                soLuong = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return soLuong;
+    }
 }

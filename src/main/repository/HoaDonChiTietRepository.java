@@ -59,19 +59,4 @@ public class HoaDonChiTietRepository {
         return check > 0;
     }
     
-    public Boolean updateTrangThaiImei(Integer idSP){
-        String sql = """
-                     UPDATE [dbo].[Imei]
-                        SET [TrangThai] = 0
-                      WHERE id_SanPham = ?
-                     """;
-        int check = 0;
-        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setObject(1, idSP);
-            check = ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return check > 0;
-    }
 }
