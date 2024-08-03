@@ -1,4 +1,3 @@
-
 package main.view.chucnang;
 
 import java.awt.event.MouseAdapter;
@@ -25,7 +24,6 @@ import main.response.SanPhamResponse;
 import main.view.sanphamchitiet.BHChonKH;
 import main.view.sanphamchitiet.ImeiChiTiet;
 
-
 public class BanHang extends javax.swing.JInternalFrame {
 
     private DefaultTableModel dtmSP;
@@ -40,7 +38,6 @@ public class BanHang extends javax.swing.JInternalFrame {
     private List<HoaDonTro> listHoaDonTro;
 
 //    DecimalFormat decimalFormat = new DecimalFormat("#,##0");
-
     public BanHang() {
         initComponents();
         this.cauhinhForm();
@@ -73,8 +70,8 @@ public class BanHang extends javax.swing.JInternalFrame {
                 hd.getMaHoaDon(),
                 hd.getNgayTao(),
                 hd.getMaNhanVien(),
-                hd.getTinhTrang()==1?"Đã Thanh Toán":"Chưa Thanh Toán"});
-                hd.getTinhTrang() ? "Chờ Thanh Toán" : "Đã Thanh Toán",});
+                hd.getTinhTrang() == 1 ? "Đã Thanh Toán" : "Chưa Thanh Toán"});
+//                hd.getTinhTrang() ? "Chờ Thanh Toán" : "Đã Thanh Toán",});
         }
     }
 
@@ -83,12 +80,12 @@ public class BanHang extends javax.swing.JInternalFrame {
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
     }
-    
-    private int getIdByMa(String maSP){
-        for(int i = 0; i < tblSP.getRowCount(); i++){
-            if(tblSP.getValueAt(i, 0).equals(maSP)){
-                for(BanHangResponse sanPham : listSanPhamBanHang){
-                    if(sanPham.getMaSanPham().equals(maSP)){
+
+    private int getIdByMa(String maSP) {
+        for (int i = 0; i < tblSP.getRowCount(); i++) {
+            if (tblSP.getValueAt(i, 0).equals(maSP)) {
+                for (BanHangResponse sanPham : listSanPhamBanHang) {
+                    if (sanPham.getMaSanPham().equals(maSP)) {
                         return sanPham.getIdSanPham();
                     }
                 }
@@ -97,11 +94,11 @@ public class BanHang extends javax.swing.JInternalFrame {
         return -1;
     }
 
-    private int getIdHoaDonByMa(String maHoaDon){
-        for(int i = 0; i < tblHoaDonTro.getRowCount(); i++){
-            if(tblHoaDonTro.getValueAt(i, 1).equals(maHoaDon)){
-                for(HoaDonTro hoadon : listHoaDonTro){
-                    if(hoadon.getMaHoaDon().equals(maHoaDon)){
+    private int getIdHoaDonByMa(String maHoaDon) {
+        for (int i = 0; i < tblHoaDonTro.getRowCount(); i++) {
+            if (tblHoaDonTro.getValueAt(i, 1).equals(maHoaDon)) {
+                for (HoaDonTro hoadon : listHoaDonTro) {
+                    if (hoadon.getMaHoaDon().equals(maHoaDon)) {
                         return hoadon.getIdHoaDon();
                     }
                 }
@@ -109,8 +106,8 @@ public class BanHang extends javax.swing.JInternalFrame {
         }
         return -1;
     }
-    
-    public void addGioHang(ArrayList<String> selectedImei, float giaBan, Integer idSP){
+
+    public void addGioHang(ArrayList<String> selectedImei, float giaBan, Integer idSP) {
 //        banHangResponse = new BanHangResponse();
 //        banHangResponse.setIdSanPham(idSP);
 //        banHangResponse.setGiaBan(giaBan);
@@ -533,14 +530,8 @@ public class BanHang extends javax.swing.JInternalFrame {
                 ImeiChiTiet imei = new ImeiChiTiet(maSP, this);
                 imei.setVisible(true);
             }
-        int index = tblSP.getSelectedRow();
-        String maSP = (String) tblSP.getValueAt(index, 0);
-        if (evt.getClickCount() == 2) {
-            ImeiChiTiet imei = new ImeiChiTiet(maSP);
-            imei.setVisible(true);
-        }
     }//GEN-LAST:event_tblSPMousePressed
-
+    }
     private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
         hdsp.themhoatro();
         showDatahoadon(hdsp.getAllHoaDon());
@@ -560,14 +551,11 @@ public class BanHang extends javax.swing.JInternalFrame {
         dialog.updateTable(customers);
 
         // Thêm WindowListener để xử lý khi cửa sổ được đóng
-        
-
         dialog.setVisible(true);
-
 
         // Lấy thông tin khách hàng đã chọn
         KhachHang selectedCustomer = dialog.getSelectedCustomer();
-       
+
     }//GEN-LAST:event_btnChonMousePressed
 
 
