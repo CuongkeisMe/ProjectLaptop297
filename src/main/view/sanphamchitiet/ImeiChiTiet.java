@@ -4,19 +4,24 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import main.entity.Imei;
+import main.repository.BanHangSPRepositories;
+import main.repository.HoaDonChiTietRepository;
 import main.repository.SanPhamRepository;
+import main.response.BanHangResponse;
 import main.response.SanPhamResponse;
 import main.view.chucnang.BanHang;
-import main.view.chucnang.SanPhamView;
 
 public class ImeiChiTiet extends javax.swing.JFrame {
+
     private DefaultTableModel dtm;
     private SanPhamRepository sanphamRepository;
     private SanPhamResponse sanphamResponse;
+    private BanHangResponse banhangResponse;
     private BanHang BHV;
+    private BanHangSPRepositories banhangRepository;
+    private HoaDonChiTietRepository hdctRepository;
     ArrayList<String> selectedImei = new ArrayList<>();
-    
+
     public ImeiChiTiet() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -25,9 +30,11 @@ public class ImeiChiTiet extends javax.swing.JFrame {
         dtm = (DefaultTableModel) tblImeiGioHang.getModel();
         sanphamRepository = new SanPhamRepository();
         sanphamResponse = new SanPhamResponse();
+        banhangRepository = new BanHangSPRepositories();
+        hdctRepository = new HoaDonChiTietRepository();
         this.ShowDataTable(sanphamResponse.getMaSanPham());
     }
-    
+
     public ImeiChiTiet(String maSP, BanHang banhangView) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -36,15 +43,18 @@ public class ImeiChiTiet extends javax.swing.JFrame {
         dtm = (DefaultTableModel) tblImeiGioHang.getModel();
         sanphamRepository = new SanPhamRepository();
         sanphamResponse = new SanPhamResponse();
+        banhangResponse = new BanHangResponse();
+        banhangRepository = new BanHangSPRepositories();
+        hdctRepository = new HoaDonChiTietRepository();
         this.ShowDataTable(maSP);
         BHV = banhangView;
     }
 
-    private void ShowDataTable(String MaSP){
+    private void ShowDataTable(String MaSP) {
         dtm.setRowCount(0);
         AtomicInteger index = new AtomicInteger(1);
-        sanphamRepository.getImeiByMaSP(MaSP).forEach(x -> dtm.addRow(new Object[]{
-            index.getAndIncrement(), x.getMaSanPham(), x.getMaImei(), false
+        banhangRepository.getImeiByMaSP(MaSP).forEach(x -> dtm.addRow(new Object[]{
+            index.getAndIncrement(), x.getMaSanPham(), x.getImei(), false
         }));
     }
 
@@ -120,22 +130,23 @@ public class ImeiChiTiet extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
-//        for (int i = 0; i < tblImeiGioHang.getRowCount(); i++) {
-//            Boolean isChecked = (Boolean) tblImeiGioHang.getValueAt(i, 3);
-//            if (isChecked != null && isChecked) {
-//                String imei = (String) tblImeiGioHang.getValueAt(i, 2);
-//                selectedImei.add(imei);
-//            }
-//        }  
-//        if (selectedImei.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Vui lòng chọn Imei muốn bán !");
-//        } else {
-//            if(BHV != null){
-//                BHV.addGioHang(selectedImei.size());
-//            }
-//            JOptionPane.showMessageDialog(this, "Chọn imei thành công: " + selectedImei);
-//            dispose();
-//        }
+        for (int i = 0; i < tblImeiGioHang.getRowCount(); i++) {
+            Boolean isChecked = (Boolean) tblImeiGioHang.getValueAt(i, 3);
+            if (isChecked != null && isChecked) {
+                String imei = (String) tblImeiGioHang.getValueAt(i, 2);
+                selectedImei.add(imei);
+            }
+        }
+        if (selectedImei.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn Imei muốn bán !");
+        } else {
+                BHV.addGioHang(banhangRepository.getGiaBanByMa(tblImeiGioHang.getValueAt(0, 1).toString()),
+                BHV.getIdByMa(BHV.layMaSPSelect()), selectedImei.size());
+                hdctRepository.updateTrangThaiImei(BHV.getIdByMa(BHV.layMaSPSelect()));
+                BHV.showDataTableSP(banhangRepository.getAll(BHV.getFormSearch()));
+                BHV.showDataGioHang();               
+            dispose();
+        }
     }//GEN-LAST:event_btnSelectActionPerformed
 
     /**

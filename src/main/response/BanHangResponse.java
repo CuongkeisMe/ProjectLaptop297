@@ -27,4 +27,5 @@ public class BanHangResponse {
     private String dungluongPin;
     private Float giaBan;
     private Integer soLuong;
+    private String Imei;
 }

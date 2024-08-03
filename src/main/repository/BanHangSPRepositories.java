@@ -6,10 +6,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import main.request.FindSanPham;
 import main.response.BanHangResponse;
 
 public class BanHangSPRepositories {
-    public ArrayList<BanHangResponse> getAll() {
+
+    public ArrayList<BanHangResponse> getAll(FindSanPham findSanPham) {
         ArrayList<BanHangResponse> listSP = new ArrayList<>();
         String sql = """
                      SELECT dbo.SanPham.id_SanPham, dbo.SanPham.MaSanPham, dbo.SanPham.TenSanPham,  
@@ -24,9 +26,27 @@ public class BanHangSPRepositories {
                      INNER JOIN dbo.Pin ON dbo.SanPham.id_Pin = dbo.Pin.id_Pin 
                      INNER JOIN dbo.Ram ON dbo.SanPham.id_Ram = dbo.Ram.id_Ram
                      WHERE dbo.SanPham.TrangThai = 1
+                     AND (
+                                              (dbo.SanPham.MaSanPham LIKE ?
+                                              OR dbo.SanPham.TenSanPham LIKE ?
+                                              OR dbo.CPU.TenCPU LIKE ?
+                                              OR dbo.GPU.TenGPU LIKE ?
+                                              OR dbo.OCung.LoaiOCung LIKE ?
+                                              OR dbo.Ram.DungLuongRam LIKE ?
+                                              OR dbo.ManHinh.KichThuoc LIKE ?
+                                              OR dbo.Pin.DungLuongPin LIKE ?)
+                                          )
                      ORDER BY dbo.SanPham.id_SanPham DESC
                      """;
         try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setObject(1, "%" + findSanPham.getKeySearch1() + "%");
+            ps.setObject(2, "%" + findSanPham.getKeySearch1() + "%");
+            ps.setObject(3, "%" + findSanPham.getKeySearch1() + "%");
+            ps.setObject(4, "%" + findSanPham.getKeySearch1() + "%");
+            ps.setObject(5, "%" + findSanPham.getKeySearch1() + "%");
+            ps.setObject(6, "%" + findSanPham.getKeySearch1() + "%");
+            ps.setObject(7, "%" + findSanPham.getKeySearch1() + "%");
+            ps.setObject(8, "%" + findSanPham.getKeySearch1() + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 BanHangResponse bhResponse = BanHangResponse.builder()
@@ -50,6 +70,31 @@ public class BanHangSPRepositories {
         return listSP;
     }
     
+    public ArrayList<BanHangResponse> getImeiByMaSP(String maSP) {
+        ArrayList<BanHangResponse> listImeiChiTiet = new ArrayList<>();
+        String sql = """
+                     SELECT dbo.SanPham.MaSanPham, dbo.Imei.Ma_Imei, dbo.Imei.TrangThai
+                     FROM   dbo.Imei INNER JOIN
+                                  dbo.SanPham ON dbo.Imei.id_SanPham = dbo.SanPham.id_SanPham
+                     			 WHERE dbo.SanPham.MaSanPham = ? 
+                     			 AND dbo.Imei.TrangThai = 1
+                     """;
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setObject(1, maSP);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                BanHangResponse spr = BanHangResponse.builder()
+                        .maSanPham(rs.getString(1))
+                        .Imei(rs.getString(2))
+                        .build();
+                listImeiChiTiet.add(spr);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return listImeiChiTiet;
+    }
+
     public int getSoLuongByMa(String maSP) {
         int soLuong = 0;
         String sql = """
@@ -57,6 +102,7 @@ public class BanHangSPRepositories {
             FROM dbo.SanPham 
             INNER JOIN dbo.Imei ON dbo.Imei.id_SanPham = dbo.SanPham.id_SanPham
             WHERE dbo.SanPham.MaSanPham = ?
+            AND dbo.Imei.TrangThai = 1
         """;
         try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, maSP);
@@ -69,7 +115,7 @@ public class BanHangSPRepositories {
         }
         return soLuong;
     }
-    
+
     public Boolean updateQuantity(Integer soLuong, String maSP) {
         String sql = """
                      update SanPham set SoLuong = ?
@@ -85,8 +131,8 @@ public class BanHangSPRepositories {
         }
         return check > 0;
     }
-    
-    public Boolean addGioHang(Integer idHoaDon, BanHangResponse bhResponse, int soLuong){
+
+    public Boolean addGioHang(Integer idHoaDon, BanHangResponse bhResponse, int soLuong) {
         String sql = """
                      INSERT INTO [dbo].[HoaDonChiTiet]
                                 ([id_HoaDon]
@@ -111,5 +157,40 @@ public class BanHangSPRepositories {
         }
         return check > 0;
     }
+
+    public float getGiaBanByMa(String maSP) {
+        String sql = """
+                 SELECT [GiaBan]
+                   FROM [dbo].[SanPham]
+                   WHERE MaSanPham = ?
+                 """;
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setObject(1, maSP);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getFloat(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return 0;  // Nếu không tìm thấy hoặc có lỗi
+    }
     
+    public Boolean updateSoLuong(Integer soLuong, Integer idSP){
+        String sql = """
+                     UPDATE [dbo].[SanPham]
+                        SET [SoLuong] = ?
+                      WHERE id_SanPham = ?
+                     """;
+        int check = 0;
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setObject(1, soLuong);
+            ps.setObject(2, idSP);
+            check = ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return check > 0;
+    }
+
 }
