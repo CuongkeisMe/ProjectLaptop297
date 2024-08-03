@@ -16,4 +16,5 @@ import lombok.ToString;
 
 public class FindKhachHang {
     private String keySearch;
+    private String keySearch2;
 }
