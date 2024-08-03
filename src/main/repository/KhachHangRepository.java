@@ -46,7 +46,6 @@ public class KhachHangRepository {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 KhachHang kh = KhachHang.builder()
-//                        .id(rs.getInt(1))
                         .ma(rs.getString(1))
                         .ten(rs.getString(2))
                         .ngaySinh(rs.getDate(3))
@@ -64,14 +63,31 @@ public class KhachHangRepository {
         return list;
     }
     
-    public ArrayList<KhachHangResponse> getLSGD(){
+    public ArrayList<KhachHangResponse> getLSGD(FindKhachHang fls){
         ArrayList<KhachHangResponse> listLSGD = new ArrayList<>();
         String sql = """
                     SELECT    dbo.KhachHang.MaKhachHang, dbo.HoaDon.MaHoaDon, dbo.KhachHang.HoTen, dbo.KhachHang.SDT, dbo.KhachHang.DiaChi, dbo.HoaDon.NgayThanhToan, dbo.HoaDon.TongTien, dbo.HoaDon.TrangThai
-                     FROM         dbo.HoaDon INNER JOIN
-                                           dbo.KhachHang ON dbo.HoaDon.id_KhachHang = dbo.KhachHang.id_KhachHang
+                     FROM     dbo.HoaDon INNER JOIN
+                              dbo.KhachHang ON dbo.HoaDon.id_KhachHang = dbo.KhachHang.id_KhachHang
+                     where 
+                          (dbo.KhachHang.MaKhachHang like ?
+                           or dbo.HoaDon.MaHoaDon like ?
+                           or dbo.KhachHang.HoTen like ?
+                           or dbo.KhachHang.SDT like ?
+                           or dbo.KhachHang.DiaChi like ?
+                           or dbo.HoaDon.NgayThanhToan like ?
+                           or dbo.HoaDon.TongTien like ? )
+                     
                      """;
         try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setObject(1, '%'+ fls.getKeySearch2() +'%');
+            ps.setObject(2, '%'+ fls.getKeySearch2() +'%');
+            ps.setObject(3, '%'+ fls.getKeySearch2() +'%');
+            ps.setObject(4, '%'+ fls.getKeySearch2() +'%');
+            ps.setObject(5, '%'+ fls.getKeySearch2() +'%');
+            ps.setObject(6, '%'+ fls.getKeySearch2() +'%');
+            ps.setObject(7, '%'+ fls.getKeySearch2() +'%');
+            
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 KhachHangResponse khs = KhachHangResponse.builder()
