@@ -30,8 +30,12 @@ public class BanHang extends javax.swing.JInternalFrame {
     private BanHangResponse banHangResponse;
     private HoaDonTro hoaDonTro;
 
+<<<<<<< HEAD
+//    DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+=======
     DecimalFormat decimalFormat = new DecimalFormat("#,##0");
 
+>>>>>>> d4ec7f96a7cf5b2f76157be6f8d29f66b03dcec4
     public BanHang() {
         initComponents();
         this.cauhinhForm();
@@ -74,6 +78,10 @@ public class BanHang extends javax.swing.JInternalFrame {
                 hd.getNgayTao(),
                 hd.getMaNhanVien(),
                 hd.getTinhTrang() == 1 ? "Đã Thanh Toán" : "Chưa Thanh Toán"});
+<<<<<<< HEAD
+//                hd.getTinhTrang() ? "Chờ Thanh Toán" : "Đã Thanh Toán",});
+=======
+>>>>>>> d4ec7f96a7cf5b2f76157be6f8d29f66b03dcec4
         }
     }
 
@@ -89,6 +97,16 @@ public class BanHang extends javax.swing.JInternalFrame {
         ui.setNorthPane(null);
     }
 
+<<<<<<< HEAD
+    private int getIdByMa(String maSP) {
+        for (int i = 0; i < tblSP.getRowCount(); i++) {
+            if (tblSP.getValueAt(i, 0).equals(maSP)) {
+                for (BanHangResponse sanPham : listSanPhamBanHang) {
+                    if (sanPham.getMaSanPham().equals(maSP)) {
+                        return sanPham.getIdSanPham();
+                    }
+                }
+=======
     public String layMaSPSelect() {
         int index = tblSP.getSelectedRow();
         return tblSP.getValueAt(index, 0).toString();
@@ -98,15 +116,23 @@ public class BanHang extends javax.swing.JInternalFrame {
         for (BanHangResponse sanPham : banhangRepository.getAll(getFormSearch())) {
             if (sanPham.getMaSanPham().equals(maSP)) {
                 return sanPham.getIdSanPham();
+>>>>>>> d4ec7f96a7cf5b2f76157be6f8d29f66b03dcec4
             }
         }
         return -1;
     }
 
+<<<<<<< HEAD
+    private int getIdHoaDonByMa(String maHoaDon) {
+        for (int i = 0; i < tblHoaDonTro.getRowCount(); i++) {
+            if (tblHoaDonTro.getValueAt(i, 1).equals(maHoaDon)) {
+                for (HoaDonTro hoadon : listHoaDonTro) {
+=======
     public int getIdHoaDonByMa(String maHoaDon) {
         for (int i = 0; i < tblHoaDonTro.getRowCount(); i++) {
             if (tblHoaDonTro.getValueAt(i, 1).equals(maHoaDon)) {
                 for (HoaDonTro hoadon : hdsp.getAllHoaDon()) {
+>>>>>>> d4ec7f96a7cf5b2f76157be6f8d29f66b03dcec4
                     if (hoadon.getMaHoaDon().equals(maHoaDon)) {
                         return hoadon.getIdHoaDon();
                     }
@@ -116,6 +142,17 @@ public class BanHang extends javax.swing.JInternalFrame {
         return -1;
     }
 
+<<<<<<< HEAD
+    public void addGioHang(ArrayList<String> selectedImei, float giaBan, Integer idSP) {
+//        banHangResponse = new BanHangResponse();
+//        banHangResponse.setIdSanPham(idSP);
+//        banHangResponse.setGiaBan(giaBan);
+//        if(banhangRepository.addGioHang(this.getIdHoaDonByMa(hoaDonTro.getMaHoaDon()), banHangResponse, soLuong)){
+//            JOptionPane.showMessageDialog(this, "Sản phẩm đã được thêm vào giỏ hàng thành công !");
+//        }else{
+//            JOptionPane.showMessageDialog(this, "lỗi khi thêm sản phẩm vào giỏ hàng !");
+//        }
+=======
     public String layMaHD() {
         int index = tblHoaDonTro.getSelectedRow();
         String maHD = tblHoaDonTro.getValueAt(index, 1).toString();
@@ -137,6 +174,7 @@ public class BanHang extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(this, "lỗi khi thêm sản phẩm vào giỏ hàng !");
         }
+>>>>>>> d4ec7f96a7cf5b2f76157be6f8d29f66b03dcec4
     }
 
     @SuppressWarnings("unchecked")
@@ -573,9 +611,12 @@ public class BanHang extends javax.swing.JInternalFrame {
                 ImeiChiTiet imei = new ImeiChiTiet(maSP, this);
                 imei.setVisible(true);
             }
+<<<<<<< HEAD
+=======
         }
+>>>>>>> d4ec7f96a7cf5b2f76157be6f8d29f66b03dcec4
     }//GEN-LAST:event_tblSPMousePressed
-
+    }
     private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
         hdsp.themhoatro();
         showDatahoadon(hdsp.getAllHoaDon());
@@ -594,6 +635,10 @@ public class BanHang extends javax.swing.JInternalFrame {
         dialog.updateTable(customers);
         // Thêm WindowListener để xử lý khi cửa sổ được đóng
         dialog.setVisible(true);
+<<<<<<< HEAD
+
+=======
+>>>>>>> d4ec7f96a7cf5b2f76157be6f8d29f66b03dcec4
         // Lấy thông tin khách hàng đã chọn
         KhachHang selectedCustomer = dialog.getSelectedCustomer();
 
