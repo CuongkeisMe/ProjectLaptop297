@@ -14,18 +14,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 
-public class BanHangResponse {
-    // Bang san pham
+public class HoaDonChiTietResponse {
+    private Integer idHoaDonChiTiet;
+    private Integer idHoaDon;
     private Integer idSanPham;
     private String maSanPham;
     private String tenSanPham;
-    private String tenCPU;
-    private String tenGPU;
-    private String loaiOCung;
-    private String dungluongRam;
-    private String kichThuoc;
-    private String dungluongPin;
-    private Float giaBan;
     private Integer soLuong;
-    private String Imei;
+    private float giaBan;
+    private float tongTien;
 }

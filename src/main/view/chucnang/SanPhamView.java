@@ -225,8 +225,8 @@ public class SanPhamView extends javax.swing.JInternalFrame {
     private void detail(int index) {
         SanPhamResponse spReponse = sanphamRepository.getAll(getFormSearch()).get(index);
         txtTenSP.setText(spReponse.getTenSanPham());
-        txtGiaNhap.setText(String.valueOf(decimalFormat.format(spReponse.getGiaNhap())));
-        txtGiaBan.setText(String.valueOf(decimalFormat.format(spReponse.getGiaBan())));
+        txtGiaNhap.setText((int) spReponse.getGiaNhap() + "");
+        txtGiaBan.setText((int) spReponse.getGiaBan() + "");
         if (spReponse.getHinhAnh() != null && !spReponse.getHinhAnh().isEmpty()) {
             lbHinhAnh.setIcon(resizeImage(spReponse.getHinhAnh(), 250, 200));
             lbHinhAnh.setToolTipText(spReponse.getHinhAnh());
@@ -429,11 +429,10 @@ public class SanPhamView extends javax.swing.JInternalFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbHinhAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel20)
                             .addComponent(jLabel16)
@@ -442,7 +441,8 @@ public class SanPhamView extends javax.swing.JInternalFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtGiaBan, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                             .addComponent(txtGiaNhap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtTenSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(txtTenSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(lbHinhAnh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
