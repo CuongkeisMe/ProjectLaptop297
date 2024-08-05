@@ -27,11 +27,11 @@ public class SanPham {
     private String TenSanPham;
     private String HinhAnh;
     private Integer SoLuong;
-    private Integer GiaNhap;
-    private Integer GIaBan;
+    private float GiaNhap;
+    private float GIaBan;
     private Integer TrangThai;
 
-    public SanPham(Integer IdRam, Integer IdCPU, Integer IdGPU, Integer IdManHinh, Integer IdOCung, Integer IdPin, String MaSanPham, String TenSanPham, String HinhAnh, Integer SoLuong, Integer GiaNhap, Integer GIaBan, Integer TrangThai) {
+    public SanPham(Integer IdRam, Integer IdCPU, Integer IdGPU, Integer IdManHinh, Integer IdOCung, Integer IdPin, String MaSanPham, String TenSanPham, String HinhAnh, Integer SoLuong, float GiaNhap, float GIaBan, Integer TrangThai) {
         this.IdRam = IdRam;
         this.IdCPU = IdCPU;
         this.IdGPU = IdGPU;
@@ -47,7 +47,7 @@ public class SanPham {
         this.TrangThai = TrangThai;
     }
 
-    public SanPham(Integer IdRam, Integer IdCPU, Integer IdGPU, Integer IdManHinh, Integer IdOCung, Integer IdPin, String TenSanPham, String HinhAnh, Integer SoLuong, Integer GiaNhap, Integer GIaBan, Integer TrangThai) {
+    public SanPham(Integer IdRam, Integer IdCPU, Integer IdGPU, Integer IdManHinh, Integer IdOCung, Integer IdPin, String TenSanPham, String HinhAnh, Integer SoLuong, float GiaNhap, float GIaBan, Integer TrangThai) {
         this.IdRam = IdRam;
         this.IdCPU = IdCPU;
         this.IdGPU = IdGPU;
