@@ -18,16 +18,18 @@ public class HoaDonEntity {
     private String MaHoaDon;
     private String MaVoucher;
     private String NgayThanhToan;
-    private float TongTien;
+    private double TongTien;
     private float TienVoucher;
     private float ThanhTien;
     private String PhuongThucThanhToan;
     private String GhiChu;
+    private int TrangThaiThanhToan;
+    
 
     public HoaDonEntity() {
     }
 
-    public HoaDonEntity(String TenKhachHang, String TenNhanVien, String MaHoaDon, String MaVoucher,String NgayThanhToan, float TongTien, float TienVoucher, float ThanhTien, String PhuongThucThanhToan, String GhiChu) {
+    public HoaDonEntity(String TenKhachHang, String TenNhanVien, String MaHoaDon, String MaVoucher, String NgayThanhToan, double TongTien, float TienVoucher, float ThanhTien, String PhuongThucThanhToan, String GhiChu, int TrangThaiThanhToan) {
         this.TenKhachHang = TenKhachHang;
         this.TenNhanVien = TenNhanVien;
         this.MaHoaDon = MaHoaDon;
@@ -38,8 +40,10 @@ public class HoaDonEntity {
         this.ThanhTien = ThanhTien;
         this.PhuongThucThanhToan = PhuongThucThanhToan;
         this.GhiChu = GhiChu;
+        this.TrangThaiThanhToan = TrangThaiThanhToan;
     }
 
+    
     public String getTenKhachHang() {
         return TenKhachHang;
     }
@@ -80,11 +84,11 @@ public class HoaDonEntity {
         this.NgayThanhToan = NgayThanhToan;
     }
 
-    public float getTongTien() {
+    public double getTongTien() {
         return TongTien;
     }
 
-    public void setTongTien(float TongTien) {
+    public void setTongTien(double TongTien) {
         this.TongTien = TongTien;
     }
 
@@ -119,9 +123,18 @@ public class HoaDonEntity {
     public void setGhiChu(String GhiChu) {
         this.GhiChu = GhiChu;
     }
+
+    public int getTrangThaiThanhToan() {
+        return TrangThaiThanhToan;
+    }
+
+    public void setTrangThaiThanhToan(int TrangThaiThanhToan) {
+        this.TrangThaiThanhToan = TrangThaiThanhToan;
+    }
+    
     public Object[] toTable(){
       return new  Object[]{
-        MaHoaDon,TenKhachHang,MaVoucher,TenNhanVien,NgayThanhToan,TongTien,TienVoucher,ThanhTien,PhuongThucThanhToan,GhiChu
+        MaHoaDon,TenKhachHang,MaVoucher,TenNhanVien,NgayThanhToan,TongTien,TienVoucher,ThanhTien,PhuongThucThanhToan,GhiChu,TrangThaiThanhToan
         };  
     }
     public Object[] loadCboPt(){
@@ -129,8 +142,6 @@ public class HoaDonEntity {
           PhuongThucThanhToan  
         };
     }
-   public List<String> cboPt() {
-        return Collections.singletonList(PhuongThucThanhToan);
-    }
+   
     
 }

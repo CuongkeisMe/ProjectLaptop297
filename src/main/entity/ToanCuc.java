@@ -1,13 +1,22 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package main.entity;
 
-public class ToanCuc {
+import java.util.ArrayList;
 
-    private static int vaiTro = -1;
+/**
+ *
+ * @author vu269
+ */
+public class ToanCuc {
+    private static int vaiTro; // Biến toàn cục để lưu vai trò
     private static int id; // Biến toàn cục để lưu ID tài khoản
     private static int idNhanVien; // Biến toàn cục để lưu ID nhân viên
     private static String maNhanVien; // Biến toàn cục để lưu mã nhân viên
-    private static String tenNhanVien; // Biến toàn cục để lưu tên nhân viên
-
+    private static String tenNhanVien;
+    private static int id_HoaDonChiTiet ;
     // Phương thức lấy vai trò
     public static int getVaiTro() {
         return vaiTro;
@@ -47,15 +56,16 @@ public class ToanCuc {
     public static void setMaNhanVien(String maNhanVien) {
         ToanCuc.maNhanVien = maNhanVien;
     }
-
-    // Phương thức lấy tên nhân viên
-    public static String getTenNhanVien() {
+    public static String getTenNhanVien(){
         return tenNhanVien;
     }
-
-    // Phương thức lưu tên nhân viên
-    public static void setTenNhanVien(String tenNhanVien) {
-        ToanCuc.tenNhanVien = tenNhanVien;
+    public static void setTenNhanVien(String tenNhanVien){
+        ToanCuc.tenNhanVien= tenNhanVien;
+    }
+    public static int getIdHoaDonChiTiet(){
+        return id_HoaDonChiTiet;
+    }
+    public static void setIdHoaDonChiTiet(int id_HoaDonChiTiet){
+        ToanCuc.id_HoaDonChiTiet= id_HoaDonChiTiet;
     }
 }
-

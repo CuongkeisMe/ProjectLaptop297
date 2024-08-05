@@ -20,5 +20,6 @@ public class HoaDonTro {
     private String maHoaDon;
     private Date ngayTao;
     private String maNhanVien;
+    private Integer tinhTrangThanhToan;
     private Integer tinhTrang;
 }

@@ -161,4 +161,42 @@ public class NhanVienRepository {
         }
         return list;
     }
+        public ArrayList<NhanVien> getAllNVKTK() {
+        ArrayList<NhanVien> list = new ArrayList<>();
+        String sql = """
+                       SELECT nv.id_NhanVien,
+                               nv.MaNhanVien,
+                               nv.HoTen,
+                               nv.NgaySinh,
+                               nv.GioiTinh,
+                               nv.SDT,
+                               nv.Email,
+                               nv.DiaChi,
+                               nv.TrangThai
+                        FROM NhanVien nv
+                        LEFT JOIN TaiKhoan tk ON nv.id_NhanVien = tk.id_NhanVien
+                        WHERE tk.id_NhanVien IS NULL;
+                     """;
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                NhanVien nv = NhanVien.builder()
+                        .id(rs.getInt(1))
+                        .ma(rs.getString(2))
+                        .ten(rs.getString(3))
+                        .ngaySinh(rs.getDate(4))
+                        .gioiTinh(rs.getBoolean(5))
+                        .sdt(rs.getString(6))
+                        .email(rs.getString(7))
+                        .diaChi(rs.getString(8))
+                        .trangThai(rs.getBoolean(9))
+                        .build();
+                list.add(nv);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
