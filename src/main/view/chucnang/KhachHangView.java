@@ -141,6 +141,7 @@ public class KhachHangView extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tbKhachHang);
 
         btTimKH.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btTimKH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/icon/9035973_search_circle_sharp_icon.png"))); // NOI18N
         btTimKH.setText("Tìm");
         btTimKH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,6 +150,7 @@ public class KhachHangView extends javax.swing.JInternalFrame {
         });
 
         btThem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/icon/211872_person_add_icon.png"))); // NOI18N
         btThem.setText("Thêm ");
         btThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,6 +159,7 @@ public class KhachHangView extends javax.swing.JInternalFrame {
         });
 
         btSua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/icon/1564525_arrow_load_refresh_reload_icon.png"))); // NOI18N
         btSua.setText("Sửa");
         btSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,6 +168,7 @@ public class KhachHangView extends javax.swing.JInternalFrame {
         });
 
         btXoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/icon/211836_trash_icon.png"))); // NOI18N
         btXoa.setText("Xóa");
         btXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,6 +177,7 @@ public class KhachHangView extends javax.swing.JInternalFrame {
         });
 
         btReset.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/icon/9104197_loading_refresh_reload_update_wait_icon.png"))); // NOI18N
         btReset.setText("Reset");
         btReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,10 +196,10 @@ public class KhachHangView extends javax.swing.JInternalFrame {
                 .addComponent(btTimKH)
                 .addGap(47, 47, 47))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1085, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1109, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(165, 165, 165)
+                .addGap(167, 167, 167)
                 .addComponent(btThem)
                 .addGap(111, 111, 111)
                 .addComponent(btSua)
@@ -210,8 +215,8 @@ public class KhachHangView extends javax.swing.JInternalFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTimKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btTimKH))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btTimKH, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -219,7 +224,7 @@ public class KhachHangView extends javax.swing.JInternalFrame {
                     .addComponent(btSua)
                     .addComponent(btXoa)
                     .addComponent(btReset))
-                .addGap(47, 47, 47))
+                .addGap(19, 19, 19))
         );
 
         jTabbedPane1.addTab("Thông tin khách hàng ", jPanel1);
@@ -238,6 +243,7 @@ public class KhachHangView extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(tbLichSuGiaoDich);
 
         btTimLichSu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btTimLichSu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/icon/9035973_search_circle_sharp_icon.png"))); // NOI18N
         btTimLichSu.setText("Tìm");
         btTimLichSu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,14 +256,15 @@ public class KhachHangView extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1109, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 688, Short.MAX_VALUE)
                 .addComponent(txtTimLichSu, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(btTimLichSu)
                 .addGap(58, 58, 58))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1103, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,9 +272,9 @@ public class KhachHangView extends javax.swing.JInternalFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTimLichSu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btTimLichSu))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btTimLichSu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTabbedPane1.addTab("Lịch sử giao dịch ", jPanel2);
@@ -388,10 +395,11 @@ public class KhachHangView extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -399,8 +407,8 @@ public class KhachHangView extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         pack();
@@ -453,6 +461,23 @@ public class KhachHangView extends javax.swing.JInternalFrame {
         }
 
         if (this.isVisible()) {
+            Date selectDate = dateNgaySinh.getDate();
+            Date currentDate = new Date();
+            if (selectDate == null) {
+                JOptionPane.showMessageDialog(this, "vui lòng chọn ngày");
+                dateNgaySinh.requestFocus();
+                return;
+            } else if (selectDate.after(currentDate)) {
+                JOptionPane.showMessageDialog(this, "Ngày đã chọn k được lớn hơn ngày hôm nay");
+                dateNgaySinh.requestFocus();
+                return;
+            } else {
+//                JOptionPane.showMessageDialog(this, "Ngày đã chọn hợp lệ ");
+
+            }
+        }
+        
+        if (this.isVisible()) {
             String sdt = txtSdt.getText();
             String regex = "^(0|\\+84)(3[2-9]|5[689]|7[06-9]|8[1-5]|9[0-9])[0-9]{7}$";//chứa số điện thoại 10 số hay 11 số, đầu 09 or +84
             if (sdt.length() > 0) {
@@ -487,10 +512,10 @@ public class KhachHangView extends javax.swing.JInternalFrame {
         
         if (this.isVisible()) {
             String diaChi = txtDiaChi.getText();
-            String regex = "^[a-zA-Z0-9\\s,.-/]+$";//chứa chữ cái, số, khoảng trắng, dấu phẩy, dấu chấm, dấu gạch ngang và dấu gạch chéo.
+            String regex = "^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơĂÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂÂÊÔƠƯăâêôơưĂÊÔƯăêôơư0-9\\s,.\\s]+$";//chứa chữ cái, số, khoảng trắng, dấu phẩy, dấu chấm, dấu gạch ngang và dấu gạch chéo.
             if (diaChi.length() > 0) {
                 if (!diaChi.matches(regex)) {// địa chỉ sai định dạng
-                    JOptionPane.showMessageDialog(this, "Sai định dạng, Nhập lại địa chỉ,và k được chứa kí tự đặc biệt: @#$%...");
+                    JOptionPane.showMessageDialog(this, "Sai định dạng, Nhập lại địa chỉ,vd: 123 Ha Noi");
                     txtDiaChi.requestFocus();
                     return;
                 }
