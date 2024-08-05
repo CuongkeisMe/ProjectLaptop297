@@ -17,6 +17,7 @@ import lombok.ToString;
 public class BanHangResponse {
     // Bang san pham
     private Integer idSanPham;
+    private Integer idImei;
     private String maSanPham;
     private String tenSanPham;
     private String tenCPU;
@@ -25,7 +26,7 @@ public class BanHangResponse {
     private String dungluongRam;
     private String kichThuoc;
     private String dungluongPin;
-    private Float giaBan;
+    private float giaBan;
     private Integer soLuong;
     private String Imei;
 }

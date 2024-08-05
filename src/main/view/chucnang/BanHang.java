@@ -18,6 +18,7 @@ import main.request.FindSanPham;
 import main.response.HoaDonChiTietResponse;
 import main.view.sanphamchitiet.BHChonKH;
 import main.view.sanphamchitiet.ImeiChiTiet;
+import main.view.sanphamchitiet.ImeiGioHang;
 
 public class BanHang extends javax.swing.JInternalFrame {
 
@@ -45,14 +46,13 @@ public class BanHang extends javax.swing.JInternalFrame {
         banHangResponse = new BanHangResponse();
         this.showDataTableSP(banhangRepository.getAll(getFormSearch()));
         this.showDatahoadon(hdsp.getAllHoaDon());
-
     }
 
     public void showDataTableSP(ArrayList<BanHangResponse> list) {
         dtmSP.setRowCount(0);
         list.forEach(x -> dtmSP.addRow(new Object[]{
             x.getMaSanPham(), x.getTenSanPham(), x.getTenCPU(), x.getTenGPU(), x.getLoaiOCung(), x.getDungluongRam(),
-            x.getKichThuoc(), x.getDungluongPin(), decimalFormat.format(x.getGiaBan()), banhangRepository.getSoLuongByMa(x.getMaSanPham())
+            x.getKichThuoc(), x.getDungluongPin(), decimalFormat.format(x.getGiaBan()), x.getSoLuong()
         }));
     }
 
@@ -73,8 +73,13 @@ public class BanHang extends javax.swing.JInternalFrame {
                 hd.getMaHoaDon(),
                 hd.getNgayTao(),
                 hd.getMaNhanVien(),
+<<<<<<< HEAD
                 hd.getTinhTrang() == 1 ? "Đã Thanh Toán" : "Chưa Thanh Toán"});
 //                hd.getTinhTrang() ? "Chờ Thanh Toán" : "Đã Thanh Toán",});
+=======
+                hd.getTinhTrangThanhToan()==0 ? "Chờ Thanh Toán" : "Đã Thanh Toán",
+                hd.getTinhTrang() });
+>>>>>>> 858f13b08e30cab76af1f20686b2713e69be43ce
         }
     }
 
@@ -90,6 +95,7 @@ public class BanHang extends javax.swing.JInternalFrame {
         ui.setNorthPane(null);
     }
 
+<<<<<<< HEAD
 //    private int getIdByMa(String maSP) {
 //        for (int i = 0; i < tblSP.getRowCount(); i++) {
 //            if (tblSP.getValueAt(i, 0).equals(maSP)) {
@@ -103,9 +109,16 @@ public class BanHang extends javax.swing.JInternalFrame {
 //        return -1;
 //    }
                 
+=======
+>>>>>>> 858f13b08e30cab76af1f20686b2713e69be43ce
     public String layMaSPSelect() {
         int index = tblSP.getSelectedRow();
         return tblSP.getValueAt(index, 0).toString();
+    }
+
+    public String layMaSPSelectGioHang() {
+        int index = tblGioHang.getSelectedRow();
+        return tblGioHang.getValueAt(index, 1).toString();
     }
 
     public int getIdByMa(String maSP) {
@@ -129,6 +142,7 @@ public class BanHang extends javax.swing.JInternalFrame {
         }
         return -1;
     }
+<<<<<<< HEAD
     
 //    public void addGioHang(ArrayList<String> selectedImei, float giaBan, Integer idSP) {
 //        banHangResponse = new BanHangResponse();
@@ -140,6 +154,8 @@ public class BanHang extends javax.swing.JInternalFrame {
 //            JOptionPane.showMessageDialog(this, "lỗi khi thêm sản phẩm vào giỏ hàng !");
 ////        }
 //    }
+=======
+>>>>>>> 858f13b08e30cab76af1f20686b2713e69be43ce
 
     public String layMaHD() {
         int index = tblHoaDonTro.getSelectedRow();
@@ -147,10 +163,31 @@ public class BanHang extends javax.swing.JInternalFrame {
         return maHD;
     }
 
+<<<<<<< HEAD
+=======
+    public float getGiaBan() {
+        int index = tblGioHang.getSelectedRow();
+        float giaBan = (float) hdctRepository.getAll(this.getIdHoaDonByMa(layMaHD())).get(index).getGiaBan();
+        return giaBan;
+    }
+
+>>>>>>> 858f13b08e30cab76af1f20686b2713e69be43ce
     public int getSoLuong() {
         int index = tblSP.getSelectedRow();
-        int soLuong = (int) tblSP.getValueAt(index, 9);
+        int soLuong = Integer.parseInt(tblSP.getValueAt(index, 9).toString());
         return soLuong;
+    }
+
+    public int getIdHDCT() {
+        int index = tblGioHang.getSelectedRow();
+        int idHDCT = hdctRepository.getAll(getIdHoaDonByMa(layMaHD())).get(index).getIdHoaDonChiTiet();
+        return idHDCT;
+    }
+
+    public int getSoLuongGioHang() {
+        int index = tblGioHang.getSelectedRow();
+        int soLuongGH = Integer.parseInt(tblGioHang.getValueAt(index, 4).toString());
+        return soLuongGH;
     }
 
     public void addGioHang(float giaBan, Integer idSP, Integer soLuong) {
@@ -159,6 +196,8 @@ public class BanHang extends javax.swing.JInternalFrame {
         banHangResponse.setGiaBan(giaBan);
         if (banhangRepository.addGioHang(this.getIdHoaDonByMa(layMaHD()), banHangResponse, soLuong)) {
             JOptionPane.showMessageDialog(this, "Sản phẩm đã được thêm vào giỏ hàng thành công !");
+//            showDataGioHang();
+//            showDataTableSP(banhangRepository.getAll(getFormSearch()));
         } else {
             JOptionPane.showMessageDialog(this, "lỗi khi thêm sản phẩm vào giỏ hàng !");
         }
@@ -182,8 +221,6 @@ public class BanHang extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblGioHang = new javax.swing.JTable();
-        btnXoa = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
@@ -338,6 +375,11 @@ public class BanHang extends javax.swing.JInternalFrame {
                 "STT", "Mã SP", "Tên SP", "Đơn giá", "Số lượng", "Thành tiền"
             }
         ));
+        tblGioHang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblGioHangMousePressed(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblGioHang);
         if (tblGioHang.getColumnModel().getColumnCount() > 0) {
             tblGioHang.getColumnModel().getColumn(0).setPreferredWidth(20);
@@ -345,38 +387,19 @@ public class BanHang extends javax.swing.JInternalFrame {
             tblGioHang.getColumnModel().getColumn(2).setPreferredWidth(140);
         }
 
-        btnXoa.setText("Xóa SP");
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
-            }
-        });
-
-        jButton4.setText("Làm mới");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnXoa)
-                        .addGap(42, 42, 42)
-                        .addComponent(jButton4)))
+                .addComponent(jScrollPane3)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnXoa)
-                    .addComponent(jButton4))
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Đơn Hàng"));
@@ -587,18 +610,22 @@ public class BanHang extends javax.swing.JInternalFrame {
 
     private void tblSPMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSPMousePressed
         int indexHD = tblHoaDonTro.getSelectedRow();
-
         if (indexHD == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn !");
         } else {
             int indexSP = tblSP.getSelectedRow();
-            layMaSPSelect();
+//            layMaSPSelect();
             String maSP = (String) tblSP.getValueAt(indexSP, 0);
+            int soLuong = Integer.parseInt(tblSP.getValueAt(indexSP, 9).toString());
             if (evt.getClickCount() == 2) {
                 ImeiChiTiet imei = new ImeiChiTiet(maSP, this);
                 imei.setVisible(true);
             }
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 858f13b08e30cab76af1f20686b2713e69be43ce
     }//GEN-LAST:event_tblSPMousePressed
 
     private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
@@ -632,18 +659,22 @@ public class BanHang extends javax.swing.JInternalFrame {
         this.showDataTableSP(banhangRepository.getAll(getFormSearch()));
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        
-    }//GEN-LAST:event_btnXoaActionPerformed
+    private void tblGioHangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGioHangMousePressed
+        int indexSP = tblGioHang.getSelectedRow();
+        layMaSPSelectGioHang();
+        String maSP = (String) tblGioHang.getValueAt(indexSP, 1);
+        if (evt.getClickCount() == 2) {
+            ImeiGioHang imeiGH = new ImeiGioHang(maSP, this);
+            imeiGH.setVisible(true);
+        }
+    }//GEN-LAST:event_tblGioHangMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChon;
     private javax.swing.JPanel btnSearch;
     private javax.swing.JButton btnTaoHoaDon;
-    private javax.swing.JButton btnXoa;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;

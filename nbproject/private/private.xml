@@ -3,9 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/banLapTop297/ProjectLaptop297/src/main/view/chucnang/NhanVienView.java</file>
             <file>file:/D:/banLapTop297/ProjectLaptop297/src/main/view/chucnang/KhachHangView.java</file>
             <file>file:/D:/banLapTop297/ProjectLaptop297/src/main/form/Menu.java</file>
+=======
+            <file>file:/E:/Laptop/src/main/view/sanphamchitiet/ImeiGioHang.java</file>
+            <file>file:/E:/Laptop/src/main/repository/HoaDonChiTietRepository.java</file>
+            <file>file:/E:/Laptop/src/main/form/DangNhap.java</file>
+            <file>file:/E:/Laptop/src/main/view/chucnang/BanHang.java</file>
+            <file>file:/E:/Laptop/src/main/view/sanphamchitiet/ImeiChiTiet.java</file>
+>>>>>>> 858f13b08e30cab76af1f20686b2713e69be43ce
         </group>
     </open-files>
 </project-private>

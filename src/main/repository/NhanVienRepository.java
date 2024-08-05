@@ -194,6 +194,7 @@ public class NhanVienRepository {
         return check > 0;
     }
         
+<<<<<<< HEAD
 //        public ArrayList<NhanVien> Tim(String hoten, String gioiTinh,String sdt, String ma ) {
 //        ArrayList<NhanVien> list = new ArrayList<>();
 //        String sql = """
@@ -239,4 +240,89 @@ public class NhanVienRepository {
 //        }
 //        return list;
 //    }
+=======
+        public ArrayList<NhanVien> Tim(String hoten, String gioiTinh,String sdt, String ma ) {
+        ArrayList<NhanVien> list = new ArrayList<>();
+        String sql = """
+                                          SELECT [id_NhanVien]
+                                                ,[MaNhanVien]
+                                                ,[HoTen]
+                                                ,[NgaySinh]
+                                                ,[GioiTinh]
+                                                ,[SDT]
+                                                ,[Email]
+                                                ,[DiaChi]
+                                                ,[TrangThai]
+                                            FROM [dbo].[NhanVien]
+                                          WHERE [TrangThai] = 1 
+                                        and [HoTen] like '%'+?+'%'  
+                                        and [GioiTinh] like '%'+?+'%' 
+                                        and [SDT] like '%'+?+'%' 
+                                        and [MaNhanVien] like '%'+?+'%'
+                                        """;
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setObject(1, hoten);
+            ps.setObject(2, gioiTinh);
+            ps.setObject(3, sdt);
+            ps.setObject(4, ma);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                NhanVien nv = NhanVien.builder()
+                        .id(rs.getInt(1))
+                        .ma(rs.getString(2))
+                        .ten(rs.getString(3))
+                        .ngaySinh(rs.getDate(4))
+                        .gioiTinh(rs.getBoolean(5))
+                        .sdt(rs.getString(6))
+                        .email(rs.getString(7))
+                        .diaChi(rs.getString(8))
+                        .trangThai(rs.getBoolean(9))
+                        .build();
+                list.add(nv);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+        public ArrayList<NhanVien> getAllNVKTK() {
+        ArrayList<NhanVien> list = new ArrayList<>();
+        String sql = """
+                       SELECT nv.id_NhanVien,
+                               nv.MaNhanVien,
+                               nv.HoTen,
+                               nv.NgaySinh,
+                               nv.GioiTinh,
+                               nv.SDT,
+                               nv.Email,
+                               nv.DiaChi,
+                               nv.TrangThai
+                        FROM NhanVien nv
+                        LEFT JOIN TaiKhoan tk ON nv.id_NhanVien = tk.id_NhanVien
+                        WHERE tk.id_NhanVien IS NULL;
+                     """;
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                NhanVien nv = NhanVien.builder()
+                        .id(rs.getInt(1))
+                        .ma(rs.getString(2))
+                        .ten(rs.getString(3))
+                        .ngaySinh(rs.getDate(4))
+                        .gioiTinh(rs.getBoolean(5))
+                        .sdt(rs.getString(6))
+                        .email(rs.getString(7))
+                        .diaChi(rs.getString(8))
+                        .trangThai(rs.getBoolean(9))
+                        .build();
+                list.add(nv);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+>>>>>>> 858f13b08e30cab76af1f20686b2713e69be43ce
 }

@@ -35,6 +35,25 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.hienthi();
+        if (!checkchuadn()) {
+            JOptionPane.showMessageDialog(this, "Bạn Chưa Đăng Nhập");
+            System.exit(0);
+        }
+        hienThiForm();
+    }
+    
+    public void hienthi() {
+        String tenNhanVien = ToanCuc.getTenNhanVien();
+        int vaiTro = ToanCuc.getVaiTro();
+        String vaiTroText = vaiTro == 0 ? "Nhân Viên" : "Admin";
+        labeltennv.setText("Tên: " + tenNhanVien);
+        LabalVaiTro.setText("Vai trò: " + vaiTroText);
+
+    }
+
+    private boolean checkchuadn() {
+        return ToanCuc.getVaiTro() != -1;
     }
 
     private void DefaultColorForm() {
@@ -55,6 +74,9 @@ public class Menu extends javax.swing.JFrame {
 
         sidePanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        labeltennv = new javax.swing.JLabel();
+        LabalVaiTro = new javax.swing.JLabel();
         trangchuPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -99,15 +121,41 @@ public class Menu extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(21, 21, 21));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/icon/user-24.png"))); // NOI18N
+
+        labeltennv.setBackground(new java.awt.Color(255, 255, 255));
+        labeltennv.setForeground(new java.awt.Color(255, 255, 255));
+        labeltennv.setText("jLabel12");
+
+        LabalVaiTro.setForeground(new java.awt.Color(255, 255, 255));
+        LabalVaiTro.setText("jLabel13");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 230, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labeltennv, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LabalVaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 70, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(labeltennv, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LabalVaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         sidePanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 230, 70));
@@ -588,6 +636,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_sanphamPanelMouseClicked
 
     private void banhangPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_banhangPanelMouseClicked
+        banhangForm = new BanHang();
         mainPanel.removeAll();
         mainPanel.add(banhangForm).setVisible(true);
     }//GEN-LAST:event_banhangPanelMouseClicked
@@ -674,10 +723,12 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel DangXuatPane;
+    private javax.swing.JLabel LabalVaiTro;
     private javax.swing.JPanel banhangPanel;
     private javax.swing.JPanel hoadonPanel1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -701,6 +752,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPanel khachhangPanel;
     private javax.swing.JPanel khuyenmaiPanel;
+    private javax.swing.JLabel labeltennv;
     private javax.swing.JDesktopPane mainPanel;
     private javax.swing.JPanel nhanvienPanel;
     private javax.swing.JPanel sanphamPanel;
@@ -709,5 +761,11 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel thongkePanel;
     private javax.swing.JPanel trangchuPanel;
     // End of variables declaration//GEN-END:variables
+
+    private void hienThiForm() {
+        mainPanel.removeAll();
+        mainPanel.add(trangchuForm).setVisible(true);
+        mainPanel.setBackground(ClickedColor);
+    }
 
 }

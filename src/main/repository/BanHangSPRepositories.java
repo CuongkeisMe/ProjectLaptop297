@@ -73,19 +73,48 @@ public class BanHangSPRepositories {
     public ArrayList<BanHangResponse> getImeiByMaSP(String maSP) {
         ArrayList<BanHangResponse> listImeiChiTiet = new ArrayList<>();
         String sql = """
-                     SELECT dbo.SanPham.MaSanPham, dbo.Imei.Ma_Imei, dbo.Imei.TrangThai
+                     SELECT dbo.SanPham.id_SanPham, dbo.Imei.id_Imei, dbo.SanPham.MaSanPham, dbo.Imei.Ma_Imei, dbo.Imei.TrangThai
                      FROM   dbo.Imei INNER JOIN
                                   dbo.SanPham ON dbo.Imei.id_SanPham = dbo.SanPham.id_SanPham
-                     			 WHERE dbo.SanPham.MaSanPham = ? 
-                     			 AND dbo.Imei.TrangThai = 1
+                     WHERE dbo.SanPham.MaSanPham = ? 
+                     AND dbo.Imei.TrangThai = 1
                      """;
         try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setObject(1, maSP);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 BanHangResponse spr = BanHangResponse.builder()
-                        .maSanPham(rs.getString(1))
-                        .Imei(rs.getString(2))
+                        .idSanPham(rs.getInt(1))
+                        .idImei(rs.getInt(2))
+                        .maSanPham(rs.getString(3))
+                        .Imei(rs.getString(4))
+                        .build();
+                listImeiChiTiet.add(spr);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return listImeiChiTiet;
+    }
+    
+    public ArrayList<BanHangResponse> getImeiDaBanByMaSP(String maSP) {
+        ArrayList<BanHangResponse> listImeiChiTiet = new ArrayList<>();
+        String sql = """
+                     SELECT dbo.SanPham.id_SanPham, dbo.Imei.id_Imei, dbo.SanPham.MaSanPham, dbo.Imei.Ma_Imei, dbo.Imei.TrangThai
+                     FROM   dbo.Imei INNER JOIN
+                                  dbo.SanPham ON dbo.Imei.id_SanPham = dbo.SanPham.id_SanPham
+                     WHERE dbo.SanPham.MaSanPham = ? 
+                     AND dbo.Imei.TrangThai = 0
+                     """;
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setObject(1, maSP);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                BanHangResponse spr = BanHangResponse.builder()
+                        .idSanPham(rs.getInt(1))
+                        .idImei(rs.getInt(2))
+                        .maSanPham(rs.getString(3))
+                        .Imei(rs.getString(4))
                         .build();
                 listImeiChiTiet.add(spr);
             }
@@ -116,21 +145,21 @@ public class BanHangSPRepositories {
         return soLuong;
     }
 
-    public Boolean updateQuantity(Integer soLuong, String maSP) {
-        String sql = """
-                     update SanPham set SoLuong = ?
-                     where MaSanPham = ?
-                     """;
-        int check = 0;
-        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setObject(1, soLuong);
-            ps.setObject(2, maSP);
-            check = ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return check > 0;
-    }
+//    public Boolean updateQuantity(Integer soLuong, String maSP) {
+//        String sql = """
+//                     update SanPham set SoLuong = ?
+//                     where MaSanPham = ?
+//                     """;
+//        int check = 0;
+//        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+//            ps.setObject(1, soLuong);
+//            ps.setObject(2, maSP);
+//            check = ps.executeUpdate();
+//        } catch (Exception e) {
+//            e.printStackTrace(System.out);
+//        }
+//        return check > 0;
+//    }
 
     public Boolean addGioHang(Integer idHoaDon, BanHangResponse bhResponse, int soLuong) {
         String sql = """
